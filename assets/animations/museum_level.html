@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System Level</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+        body {
+            background-color: #f0f4f8;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container Size Updated to 200px */
+        .level-card {
+            position: relative;
+            width: 200px; /* User requested 200px */
+            height: 280px; /* Proportionally taller */
+            perspective: 800px;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* The Interior (Deep Space with Sun) */
+        .museum-interior {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 180px; /* 200px - padding */
+            height: 260px;
+            background: radial-gradient(circle at center, #2b1055 0%, #000000 100%);
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            z-index: 1;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+            overflow: hidden;
+            border: 2px solid #ff9800;
+        }
+
+        /* Stars & Sun */
+        .stars {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px);
+            background-size: 350px 350px, 200px 200px;
+        }
+
+        .sun-model {
+            font-size: 60px;
+            margin-top: 40px;
+            animation: spin 20s linear infinite;
+            filter: drop-shadow(0 0 10px orange);
+        }
+
+        .interior-text {
+            color: #ff9800;
+            font-family: 'Fredoka One', cursive;
+            font-size: 18px;
+            text-align: center;
+            text-shadow: 0 0 5px #ff5722;
+            z-index: 2;
+            margin-top: 10px;
+        }
+
+        /* The Door Frame */
+        .door-frame {
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 280px;
+            border: 8px solid #3e2723; /* Dark wood */
+            border-bottom: none;
+            border-radius: 12px 12px 0 0;
+            z-index: 10;
+            display: flex;
+            box-shadow: 0 15px 25px rgba(0,0,0,0.4);
+            background: transparent;
+        }
+
+        /* Individual Doors */
+        .door {
+            width: 50%;
+            height: 100%;
+            background-color: #5d4037;
+            position: relative;
+            transition: transform 1.2s cubic-bezier(0.4, 0.0, 0.2, 1);
+            transform-style: preserve-3d;
+            border-bottom: none;
+            /* Metal/Sci-fi Texture for Solar System */
+            background-image:
+                linear-gradient(to right, rgba(0,0,0,0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.2) 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 2px solid #3e2723;
+        }
+
+        .door-left {
+            transform-origin: left;
+            border-right: 1px solid #2d1b15;
+            border-top-left-radius: 8px;
+        }
+
+        .door-right {
+            transform-origin: right;
+            border-left: 1px solid #2d1b15;
+            border-top-right-radius: 8px;
+        }
+
+        /* Decorative "Planet Icon" on doors */
+        .door-decor {
+            position: absolute;
+            top: 30%;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            opacity: 0.7;
+        }
+
+        .knob {
+            position: absolute;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: silver;
+            border-radius: 50%;
+            box-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+            border: 1px solid #444;
+        }
+        .door-left .knob { right: 8px; }
+        .door-right .knob { left: 8px; }
+
+        /* Signboard on top */
+        .signboard {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #e65100; /* Orange for Solar System */
+            color: white;
+            padding: 4px 12px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 13px;
+            border-radius: 15px;
+            border: 2px solid white;
+            z-index: 20;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+            white-space: nowrap;
+        }
+
+        /* Open State */
+        .door-open .door-left {
+            transform: rotateY(-110deg);
+        }
+        .door-open .door-right {
+            transform: rotateY(110deg);
+        }
+
+        /* Astronaut Kids Animation */
+        .kid {
+            position: absolute;
+            font-size: 40px; /* Slightly larger for detail */
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes runIntoSpace {
+            0% {
+                transform: translate(-50%, 50px) scale(1);
+                opacity: 1;
+                bottom: 0;
+            }
+            15% {
+                /* Float jump */
+                transform: translate(-50%, 0px) scale(0.9) rotate(5deg);
+            }
+            100% {
+                transform: translate(-50%, -100px) scale(0.2); /* Float away */
+                opacity: 0;
+            }
+        }
+
+        .kid.running {
+            animation: runIntoSpace 1.5s forwards ease-out;
+        }
+
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Click overlay */
+        .click-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 50;
+            cursor: pointer;
+        }
+
+        .hand-icon {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Solar System Door Item -->
+<div class="level-card" id="levelCard">
+
+    <!-- Interior (Solar System) -->
+    <div class="museum-interior">
+        <div class="stars"></div>
+        <!-- The Sun inside -->
+        <div class="sun-model">☀️</div>
+        <div class="interior-text">SOLAR<br>SYSTEM</div>
+    </div>
+
+    <!-- Doors -->
+    <div class="door-frame" id="doorFrame">
+        <div class="signboard">SOLAR SYSTEM</div>
+        <div class="door door-left">
+            <div class="door-decor">🪐</div> <!-- Planet decoration -->
+            <div class="knob"></div>
+        </div>
+        <div class="door door-right">
+            <div class="door-decor">🌑</div> <!-- Moon decoration -->
+            <div class="knob"></div>
+        </div>
+    </div>
+
+    <!-- Kids Container -->
+    <div id="kidsContainer"></div>
+
+    <!-- Invisible Click Area -->
+    <div class="click-overlay" onclick="enterLevel()"></div>
+
+    <div class="hand-icon">👆 Tap</div>
+
+</div>
+
+<script>
+    function enterLevel() {
+        const doorFrame = document.getElementById('doorFrame');
+        const kidsContainer = document.getElementById('kidsContainer');
+        const hand = document.querySelector('.hand-icon');
+
+        if (doorFrame.classList.contains('door-open')) return;
+        doorFrame.classList.add('door-open');
+
+        if(hand) hand.style.display = 'none';
+
+        // New: Astronauts emojis (Space Suit)
+        const astronauts = ['👨‍🚀', '👩‍🚀', '🧑‍🚀'];
+        let delay = 200;
+
+        // 3 astronauts enter
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => {
+                const kid = document.createElement('div');
+                kid.classList.add('kid');
+                kid.innerText = astronauts[i % astronauts.length];
+
+                // Random slight offset
+                const offset = (Math.random() * 40) - 20;
+                kid.style.marginLeft = `${offset}px`;
+
+                kid.classList.add('running');
+                kidsContainer.appendChild(kid);
+
+                setTimeout(() => kid.remove(), 2000);
+
+            }, delay);
+            delay += 500; // Slower interval for floating effect
+        }
+    }
+</script>
+</body>
+</html>
