@@ -43,6 +43,7 @@ dependencies:
   fl_chart: ^1.2.0
   shared_preferences: ^2.5.5
   animate_do: ^4.2.0
+  device_info_plus: ^13.0.0
 
   #shapeofview: ^1.4.7
 
