@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "152257528049",
+    "project_id": "galaxy-explorer-fa724",
+    "storage_bucket": "galaxy-explorer-fa724.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152257528049:android:706d7d045f0f194b452950",
+        "android_client_info": {
+          "package_name": "com.example.galaxy_explorer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbJqS79E6pJQz7zuP6emAdam_dLweSvNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
