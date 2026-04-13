@@ -43,8 +43,9 @@ dependencies:
   fl_chart: ^1.2.0
   shared_preferences: ^2.5.5
   animate_do: ^4.2.0
-  device_info_plus: ^13.0.0
-  http: 
+  #device_info_plus: ^13.0.0
+  firebase_core: ^4.6.0
+  firebase_auth: ^6.3.0
 
   #shapeofview: ^1.4.7
 
