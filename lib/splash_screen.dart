@@ -1,7 +1,5 @@
-// ignore_for_file: camel_case_types
-
 import 'package:flutter/material.dart';
-import 'package:galaxy_explorer/onboarding_screen.dart';
+import 'package:galaxy_explorer/Authentication/wrapper.dart';
 import 'package:lottie/lottie.dart';
 
 class splash_screen extends StatefulWidget {
@@ -18,19 +16,21 @@ class _SplashScreenState extends State<splash_screen> {
   void initState() {
     super.initState();
 
-    // Show text after rocket launches (2 seconds)
     Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        showText = true;
-      });
+      if (mounted) {
+        setState(() {
+          showText = true;
+        });
+      }
     });
 
-    // Navigate to onboarding after full splash (3 seconds)
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const onboarding_screen()),
-      );
+      if (mounted) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const Wrapper()),
+        );
+      }
     });
   }
 
@@ -40,10 +40,7 @@ class _SplashScreenState extends State<splash_screen> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          // Rocket animation
           Center(child: Lottie.asset('assets/animations/Rocket_Lounch.json')),
-
-          // Show text when showText = true
           if (showText)
             Positioned(
               bottom: 80,
@@ -59,7 +56,6 @@ class _SplashScreenState extends State<splash_screen> {
             ),
         ],
       ),
-     // backgroundColor: Colors.black,
     );
   }
 }

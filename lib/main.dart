@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:galaxy_explorer/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'firebase_options.dart'; // Eita oboshoyei thakte hobe
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
-  try { 
+  try {
+    // Web-e run korar jonno nichei options deya thaktei hobe
     await Firebase.initializeApp(
-     // options: DefaultFirebaseOptions.currentPlatform,  
+      options: DefaultFirebaseOptions.currentPlatform, 
     );
+    print("Firebase Initialized Successfully");
   } catch (e) {
-    print("Firebase Error: $e");
+    print("Firebase Initialization Error: $e");
   }
+  
   runApp(const MyApp());
 }
 
@@ -27,7 +30,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // Kept exactly as your original class name
       home: const splash_screen(), 
     );
   }
