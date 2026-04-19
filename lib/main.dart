@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:galaxy_explorer/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; // Eita oboshoyei thakte hobe
+import 'package:get/get.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
   try {
-    // Web-e run korar jonno nichei options deya thaktei hobe
     await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform, 
+      options: DefaultFirebaseOptions.currentPlatform,
     );
     print("Firebase Initialized Successfully");
   } catch (e) {
@@ -24,13 +23,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      title: 'Galaxy Explorer',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const splash_screen(), 
+      home: const SplashScreen(), // Make sure this matches your class name
     );
   }
 }

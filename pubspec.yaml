@@ -46,6 +46,8 @@ dependencies:
   #device_info_plus: ^13.0.0
   firebase_core: ^4.6.0
   firebase_auth: ^6.3.0
+  get: ^4.7.3
+  
 
   #shapeofview: ^1.4.7
 

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:galaxy_explorer/Authentication/wrapper.dart';
+import 'package:galaxy_explorer/onboarding_screen.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:lottie/lottie.dart';
 
-class splash_screen extends StatefulWidget {
-  const splash_screen({super.key});
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<splash_screen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<splash_screen> {
+class _SplashScreenState extends State<SplashScreen> {
   bool showText = false;
-
   @override
   void initState() {
     super.initState();
@@ -26,10 +29,8 @@ class _SplashScreenState extends State<splash_screen> {
 
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const Wrapper()),
-        );
+        // Use Get.offAll instead of Navigator
+        Get.offAll(() => const onboarding_screen());
       }
     });
   }
