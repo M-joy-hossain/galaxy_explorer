@@ -26,7 +26,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
     'Uranus': 'ইউরেনাস',
     'Neptune': 'নেপচুন',
   };
-  // গ্রহের ছবির URL (NASA/প্রামাণিক সোর্স থেকে)
+
   final Map<String, String> planetImages = {
     'Mercury': 'assets/images/mercury.png',
     'Venus': 'assets/images/venus.png',
@@ -249,7 +249,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
               style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
           ),
-          
+  
           //ফিডব্যাক মেসেজ
           AnimatedOpacity(
             opacity: showFeedback ? 1.0 : 0.0,
@@ -281,7 +281,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                     child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // সূর্য এখন প্রথম পজিশনে - ছবি সহ
+                      //
                       Column(
                         children: [
                           Container(
