@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:galaxy_explorer/Authentication/forgot.dart';
 import 'package:galaxy_explorer/Authentication/signup.dart';
 import 'package:galaxy_explorer/Authentication/wrapper.dart';
@@ -13,22 +13,28 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  // Input Controllers
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  // Focus Nodes to handle keyboard flow
   final FocusNode emailFocus = FocusNode();
   final FocusNode passwordFocus = FocusNode();
 
   bool isLoading = false;
   bool obscurePassword = true;
 
+  // Sign In Logic
   Future<void> signIn() async {
-    // Remove focus from text fields
-    emailFocus.unfocus();
-    passwordFocus.unfocus();
+    FocusScope.of(context).unfocus();
 
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill all fields")),
+      Get.snackbar(
+        "Required",
+        "Please fill all fields",
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.orange,
+        colorText: Colors.white,
       );
       return;
     }
@@ -41,13 +47,12 @@ class _LoginState extends State<Login> {
         password: passwordController.text.trim(),
       );
 
+      // Successful login - Go to Wrapper
       if (mounted) {
         Get.offAll(() => const Wrapper());
       }
-
     } on FirebaseAuthException catch (e) {
       String message = "Login failed";
-
       if (e.code == 'user-not-found') {
         message = "No user found with this email";
       } else if (e.code == 'wrong-password') {
@@ -56,12 +61,15 @@ class _LoginState extends State<Login> {
         message = "Invalid email format";
       }
 
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(message), backgroundColor: Colors.red),
-        );
-      }
-
+      Get.snackbar(
+        "Error",
+        message,
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
+    } catch (e) {
+      debugPrint(e.toString());
     } finally {
       if (mounted) {
         setState(() => isLoading = false);
@@ -83,133 +91,144 @@ class _LoginState extends State<Login> {
     return Scaffold(
       backgroundColor: const Color(0xffF4F6FB),
       body: SafeArea(
-        child: GestureDetector(
-          // Dismiss keyboard when tapping outside
-          onTap: () {
-            emailFocus.unfocus();
-            passwordFocus.unfocus();
-          },
-          child: ListView(
-            padding: const EdgeInsets.all(20),
-            children: [
-              const SizedBox(height: 40),
+        // ৩য় অপশন: GestureDetector পুরোপুরি রিমুভ করা হয়েছে টার্চ কনফ্লিক্ট এড়াতে
+        child: ListView(
+          // স্ক্রিন ধরে নিচে টান দিলেই কীবোর্ড হাইড হয়ে যাবে (GestureDetector এর বিকল্প)
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          padding: const EdgeInsets.symmetric(horizontal: 25),
+          children: [
+            const SizedBox(height: 60),
 
-              const Text(
-                "Galaxy Explorer 🚀",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
+            // Logo or App Title
+            const Icon(Icons.rocket_launch, size: 80, color: Colors.deepPurple),
+            const SizedBox(height: 10),
+            const Text(
+              "Galaxy Explorer",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+
+            const SizedBox(height: 50),
+
+            const Text(
+              "Welcome Back",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              "Login to continue your space journey",
+              style: TextStyle(color: Colors.grey, fontSize: 14),
+            ),
+
+            const SizedBox(height: 35),
+
+            /// EMAIL FIELD
+            TextField(
+              controller: emailController,
+              focusNode: emailFocus,
+              autofocus: false, // এটি false থাকবে
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              onSubmitted: (_) {
+                FocusScope.of(context).requestFocus(passwordFocus);
+              },
+              decoration: InputDecoration(
+                hintText: "Email",
+                prefixIcon: const Icon(Icons.email_outlined),
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(vertical: 18),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
                 ),
               ),
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 20),
 
-              const Text(
-                "Welcome Back",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-
-              const SizedBox(height: 8),
-
-              const Text(
-                "Login to continue",
-                style: TextStyle(color: Colors.grey),
-              ),
-
-              const SizedBox(height: 30),
-
-              TextField(
-                controller: emailController,
-                focusNode: emailFocus,
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                onSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(passwordFocus);
-                },
-                decoration: InputDecoration(
-                  hintText: "Email",
-                  prefixIcon: const Icon(Icons.email),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
+            /// PASSWORD FIELD
+            TextField(
+              controller: passwordController,
+              focusNode: passwordFocus,
+              autofocus: false,
+              obscureText: obscurePassword,
+              textInputAction: TextInputAction.done,
+              onSubmitted: (_) => signIn(),
+              decoration: InputDecoration(
+                hintText: "Password",
+                prefixIcon: const Icon(Icons.lock_outline),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    obscurePassword ? Icons.visibility_off : Icons.visibility,
                   ),
+                  onPressed: () => setState(() => obscurePassword = !obscurePassword),
+                ),
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: const EdgeInsets.symmetric(vertical: 18),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  borderSide: BorderSide.none,
                 ),
               ),
+            ),
 
-              const SizedBox(height: 20),
-
-              TextField(
-                controller: passwordController,
-                focusNode: passwordFocus,
-                obscureText: obscurePassword,
-                textInputAction: TextInputAction.done,
-                onSubmitted: (_) => signIn(),
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  prefixIcon: const Icon(Icons.lock),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      obscurePassword ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        obscurePassword = !obscurePassword;
-                      });
-                    },
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 30),
-
-              SizedBox(
-                height: 55,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : signIn,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 51, 9, 125),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: isLoading
-                      ? const CircularProgressIndicator(color: Colors.white)
-                      : const Text("Login", style: TextStyle(fontSize: 18)),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account? "),
-                  TextButton(
-                    onPressed: () => Get.to(() => const Signup()),
-                    child: const Text(
-                      "Register now",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-
-              TextButton(
+            // Forgot Password link
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
                 onPressed: () => Get.to(() => const Forgot()),
                 child: const Text("Forgot password?"),
               ),
-            ],
-          ),
+            ),
+
+            const SizedBox(height: 20),
+
+            /// LOGIN BUTTON
+            SizedBox(
+              height: 55,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: isLoading ? null : signIn,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  foregroundColor: Colors.white,
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                child: isLoading
+                    ? const SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator(color: Colors.white, strokeWidth: 3)
+                )
+                    : const Text("Login", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            /// REGISTER LINK
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Don't have an account? ", style: TextStyle(color: Colors.black54)),
+                GestureDetector(
+                  onTap: () => Get.to(() => const Signup()),
+                  child: const Text(
+                    "Register now",
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.deepPurple),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

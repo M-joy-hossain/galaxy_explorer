@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'firebase_options.dart';
 
 void main() async {
+
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
@@ -14,6 +15,7 @@ void main() async {
   } catch (e) {
     print("Firebase Initialization Error: $e");
   }
+
 
   runApp(const MyApp());
 }
