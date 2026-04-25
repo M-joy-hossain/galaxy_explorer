@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:math' as math;
 // আপনার প্রজেক্টের সঠিক পাথ অনুযায়ী নিচের ইম্পোর্টগুলো চেক করে নিন
 import 'package:galaxy_explorer/AlphabetPage.dart';
+import 'package:galaxy_explorer/Moon_Mission_Learning.dart';
 import 'package:galaxy_explorer/SolarSystemLearning.dart';
+import 'package:galaxy_explorer/Space_journey_by_rocket.dart';
 import 'package:galaxy_explorer/black_hole_learning.dart'; 
 import 'package:galaxy_explorer/mars_mission_learning.dart';
 
@@ -49,7 +51,7 @@ class SpaceMuseumGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<LevelData> levels = [
       LevelData(
-        title: "SOLAR SYSTEM",
+        title: "সৌরজগত",
         interiorEmoji: "☀️",
         leftDoorDecoration: "🪐",
         rightDoorDecoration: "🌑",
@@ -57,7 +59,7 @@ class SpaceMuseumGrid extends StatelessWidget {
         gamePage:  SolarSystemLearning(), 
       ),
       LevelData(
-        title: "MARS MISSION",
+        title: "মঙ্গল অভিযান",
         interiorEmoji: "🚀",
         leftDoorDecoration: "🔴",
         rightDoorDecoration: "🤖",
@@ -65,43 +67,28 @@ class SpaceMuseumGrid extends StatelessWidget {
         gamePage: const MarsMissionLearning(),  
       ),
       LevelData(
-        title: "BLACK HOLE",
+        title: "নিল আর্মস্ট্রং ও অ্যাপোলো ১১",
         interiorEmoji: "🕳️",
         leftDoorDecoration: "✨",
         rightDoorDecoration: "🌌",
         interiorColors: [const Color(0xFF000000), const Color(0xFF434343)],
-        gamePage: const BlackHoleLearning(), 
+        gamePage: const  MoonMissionLearning(), 
       ),
       LevelData(
-        title: "ALIEN BASE",
+        title: "বন্ধুদের মহাকাশ অভিযান",
         interiorEmoji: "👽",
         leftDoorDecoration: "🛸",
         rightDoorDecoration: "👾",
         interiorColors: [const Color(0xFF0F9D58), Colors.black],
-        gamePage: const AlphabetPage(),
+        gamePage: const SpaceJourneyByRocket(),
       ),
-      LevelData(
-        title: "MOON WALK",
-        interiorEmoji: "🌕",
-        leftDoorDecoration: "🛰️",
-        rightDoorDecoration: "👨‍🚀",
-        interiorColors: [const Color(0xFF37474F), Colors.black],
-        gamePage: const AlphabetPage(),
-      ),
-      LevelData(
-        title: "DEEP SPACE",
-        interiorEmoji: "🔭",
-        leftDoorDecoration: "⭐",
-        rightDoorDecoration: "☄️",
-        interiorColors: [const Color(0xFF1A237E), Colors.black],
-        gamePage: const AlphabetPage(),
-      ),
+     
     ];
 
     return Scaffold(
       backgroundColor: const Color(0xFFf0f4f8),
       appBar: AppBar(
-        title: const Text("Space Adventure Museum"),
+        title: const Text("মহাকাশ জাদুঘর"),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,

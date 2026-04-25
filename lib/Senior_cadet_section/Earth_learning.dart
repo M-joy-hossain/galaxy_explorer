@@ -17,7 +17,7 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
   void initState() {
     super.initState();
     // Assets থেকে ভিডিও লোড করা (ভিডিও পাথটি নিশ্চিত করুন)
-    _videoController = VideoPlayerController.asset('assets/videos/Earth_video.mp4')
+    _videoController = VideoPlayerController.asset('assets/videos/earth.mp4')
       ..initialize().then((_) {
         setState(() {
           _isVideoInitialized = true;

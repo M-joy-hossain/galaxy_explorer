@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:fl_chart/fl_chart.dart'; // Pie Chart এর জন্য এটি প্রয়োজন
 
 class MathProblemSolving extends StatefulWidget {
   const MathProblemSolving({super.key});
@@ -12,7 +13,9 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
   int num1 = 3;
   int num2 = 2;
   int score = 0;
-  bool isAddition = true; // যোগ নাকি বিয়োগ তা ঠিক করবে
+  int questionCount = 0; // প্রশ্নের সংখ্যা গণনার জন্য
+  int correctAnswers = 0; // কয়টি সঠিক হয়েছে তার জন্য
+  bool isAddition = true;
   late AnimationController _rocketController;
   late Animation<double> _rocketAnimation;
 
@@ -21,7 +24,6 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
     super.initState();
     _generateNewProblem();
 
-    // রকেট ওড়ার এনিমেশন
     _rocketController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -32,15 +34,33 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
   }
 
   void _generateNewProblem() {
+    if (questionCount >= 10) {
+      // ১০টি প্রশ্ন শেষ হলে রেজাল্ট পেজে নিয়ে যাবে
+      Future.delayed(Duration.zero, () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SpaceMathResult(
+              score: score,
+              correct: correctAnswers,
+              total: 10,
+            ),
+          ),
+        );
+      });
+      return;
+    }
+
     Random random = Random();
     setState(() {
-      isAddition = random.nextBool(); // র‍্যান্ডমলি যোগ বা বিয়োগ আসবে
+      questionCount++;
+      isAddition = random.nextBool();
       if (isAddition) {
-        num1 = random.nextInt(6) + 1; // ১ থেকে ৬
-        num2 = random.nextInt(5) + 1; // ১ থেকে ৫
+        num1 = random.nextInt(6) + 1;
+        num2 = random.nextInt(5) + 1;
       } else {
-        num1 = random.nextInt(6) + 5; // ৫ থেকে ১০
-        num2 = random.nextInt(5) + 1; // ১ থেকে ৫ (যাতে উত্তর মাইনাস না হয়)
+        num1 = random.nextInt(6) + 5;
+        num2 = random.nextInt(5) + 1;
       }
     });
   }
@@ -49,6 +69,7 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
     int correctAnswer = isAddition ? (num1 + num2) : (num1 - num2);
 
     if (userAnswer == correctAnswer) {
+      correctAnswers++;
       _rocketController.forward().then((_) {
         _rocketController.reset();
         setState(() {
@@ -64,7 +85,6 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
         ),
       );
     } else {
-      // ভুল হলে হালকা ভাইব্রেশন বা মেসেজ
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Oops! Try again, Alien is watching! 👽"),
@@ -72,6 +92,7 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
           duration: Duration(milliseconds: 500),
         ),
       );
+      _generateNewProblem(); // ভুল হলেও পরের প্রশ্নে নিয়ে যাবে
     }
   }
 
@@ -84,31 +105,24 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
   @override
   Widget build(BuildContext context) {
     int correctAnswer = isAddition ? (num1 + num2) : (num1 - num2);
-    
-    // অপশন জেনারেট করা (একটি সঠিক, বাকি দুটি ভুল)
     List<int> options = [correctAnswer, correctAnswer + 2, correctAnswer - 1];
     options.shuffle();
 
     return Scaffold(
       backgroundColor: const Color(0xFF050510),
       appBar: AppBar(
-        title: const Text("Space Math Quest"),
+        title: Text("Quest: $questionCount / 10"), // প্রগ্রেস দেখাবে
         backgroundColor: Colors.indigo[900],
         elevation: 0,
       ),
       body: Stack(
         children: [
-          // Background Stars (Static)
-          const Positioned.fill(child: Center(child: Text("✨  .  * .  ✨  .  *", style: TextStyle(color: Colors.white24, fontSize: 30)))),
-          
+          const Positioned.fill(child: Center(child: Text("✨ . * . ✨ . *", style: TextStyle(color: Colors.white24, fontSize: 30)))),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Score
               Text("Score: $score", style: const TextStyle(color: Colors.cyanAccent, fontSize: 24, fontWeight: FontWeight.bold)),
               const SizedBox(height: 50),
-
-              // Problem Area
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -120,10 +134,7 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
                   _buildObjectGroup(num2, isAddition ? "🚀" : "👽"),
                 ],
               ),
-              
               const SizedBox(height: 40),
-              
-              // Animated Rocket
               AnimatedBuilder(
                 animation: _rocketAnimation,
                 builder: (context, child) {
@@ -133,12 +144,9 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
                   );
                 },
               ),
-
               const SizedBox(height: 40),
               const Text("How many are left?", style: TextStyle(color: Colors.white70, fontSize: 20)),
               const SizedBox(height: 30),
-
-              // Answer Buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: options.map((opt) => ElevatedButton(
@@ -159,20 +167,92 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
     );
   }
 
-  // ইমোজি দিয়ে সংখ্যা বোঝানোর উইজেট
   Widget _buildObjectGroup(int count, String emoji) {
     return Container(
       constraints: const BoxConstraints(maxWidth: 120),
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(15),
-      ),
+      decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(15)),
       child: Wrap(
         alignment: WrapAlignment.center,
         spacing: 5,
         runSpacing: 5,
         children: List.generate(count, (index) => Text(emoji, style: const TextStyle(fontSize: 25))),
+      ),
+    );
+  }
+}
+
+// ---------------- রেজাল্ট পেজ উইজেট ----------------
+class SpaceMathResult extends StatelessWidget {
+  final int score;
+  final int correct;
+  final int total;
+
+  const SpaceMathResult({super.key, required this.score, required this.correct, required this.total});
+
+  @override
+  Widget build(BuildContext context) {
+    int wrong = total - correct;
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF050510),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("🎊 CONGRATULATIONS! 🎊", style: TextStyle(color: Colors.yellowAccent, fontSize: 28, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              const Text("You are a Space Math Hero! 👨‍🚀", style: TextStyle(color: Colors.white70, fontSize: 18)),
+              const SizedBox(height: 40),
+              
+              // Pie Chart
+              SizedBox(
+                height: 200,
+                child: PieChart(
+                  PieChartData(
+                    sections: [
+                      PieChartSectionData(
+                        value: correct.toDouble(),
+                        color: Colors.greenAccent,
+                        title: 'Correct',
+                        radius: 60,
+                        titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      PieChartSectionData(
+                        value: wrong.toDouble(),
+                        color: Colors.redAccent,
+                        title: 'Wrong',
+                        radius: 60,
+                        titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                    ],
+                    centerSpaceRadius: 40,
+                    sectionsSpace: 5,
+                  ),
+                ),
+              ),
+              
+              const SizedBox(height: 40),
+              Text("Final Score: $score", style: const TextStyle(color: Colors.cyanAccent, fontSize: 32, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 50),
+              
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MathProblemSolving()));
+                },
+                icon: const Icon(Icons.refresh, color: Colors.white),
+                label: const Text("Play Again", style: TextStyle(fontSize: 20, color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

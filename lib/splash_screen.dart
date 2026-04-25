@@ -30,7 +30,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         // Use Get.offAll instead of Navigator
-        Get.offAll(() => const Wrapper());
+       
+       // Get.offAll(() => const Wrapper());
+        Get.offAll(() => const onboarding_screen());
       }
     });
   }

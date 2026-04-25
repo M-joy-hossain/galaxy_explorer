@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/Earth_learning.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/Mercury_learning.dart';
-import 'package:galaxy_explorer/Senior_cadet_section/Mers_learning.dart';
+import 'package:galaxy_explorer/Senior_cadet_section/Mars_learning.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/Venus_learning.dart';
+import 'package:galaxy_explorer/Senior_cadet_section/jupiter_learning.dart';
+import 'package:galaxy_explorer/Senior_cadet_section/neptune_learning.dart';
+import 'package:galaxy_explorer/Senior_cadet_section/saturn_learning.dart';
+import 'package:galaxy_explorer/Senior_cadet_section/uranus_learning.dart';
 // অন্যান্য গ্রহের পেজগুলো এখানে ইমপোর্ট করবেন (যেমন: MarsLearning, JupiterLearning ইত্যাদি)
 
 class SeniorDashboard extends StatelessWidget {
@@ -86,25 +90,42 @@ class SeniorDashboard extends StatelessWidget {
                    PlanetItem(
                     title: "Jupiter",
                     img: 'assets/images/jupiter_dashboard_img.png',
-                    onTap: () {},
+                    onTap: () {
+                        
+                         Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const JupiterLearningPage()));
+                    },
                   ),
 
                   PlanetItem(
                     title: "Saturn",
                     img: 'assets/images/saturn_dashboard_img.png',
-                    onTap: () {},
+                    onTap: () {
+                        
+                         Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const  SaturnLearningPage()));
+                    },
+
                   ),
 
                 
                   PlanetItem(
                     title: "Uranus",
                     img: 'assets/images/uranus_dashboard_img.png',
-                    onTap: () {},
+                     onTap: () {
+                        
+                         Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const UranusLearningPage()));
+                    },
                   ),
                   PlanetItem(
                     title: "Neptune",
                     img: 'assets/images/neptune_dashboard_img.png',
-                    onTap: () {},
+                    onTap: () {
+                        
+                         Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => const  NeptuneLearningPage()));
+                    },
                   ),
                 ],
               ),
