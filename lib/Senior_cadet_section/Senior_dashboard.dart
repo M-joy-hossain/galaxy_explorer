@@ -6,6 +6,7 @@ import 'package:galaxy_explorer/Senior_cadet_section/Venus_learning.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/jupiter_learning.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/neptune_learning.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/saturn_learning.dart';
+import 'package:galaxy_explorer/Senior_cadet_section/senior_leaderboard_page.dart';
 import 'package:galaxy_explorer/Senior_cadet_section/uranus_learning.dart';
 // অন্যান্য গ্রহের পেজগুলো এখানে ইমপোর্ট করবেন (যেমন: MarsLearning, JupiterLearning ইত্যাদি)
 
@@ -15,13 +16,29 @@ class SeniorDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 252, 252, 252), 
+      backgroundColor: const Color.fromARGB(255, 252, 252, 252),
       appBar: AppBar(
-        title: const Text("Senior Explorer Dashboard", 
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        title: const Text(
+          "Senior Explorer Dashboard",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         backgroundColor: Colors.deepPurple,
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            tooltip: 'Leaderboard',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const SeniorLeaderboardPage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.emoji_events, color: Colors.white),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -31,13 +48,20 @@ class SeniorDashboard extends StatelessWidget {
               children: const [
                 Text(
                   "Welcome, Senior Cadet! 🚀",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orangeAccent,
+                  ),
                 ),
                 SizedBox(height: 8),
                 Text(
                   "নিচের কোন গ্রহটি তুমি আজ এক্সপ্লোর করতে চাও?",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Color.fromARGB(179, 10, 10, 10)),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color.fromARGB(179, 10, 10, 10),
+                  ),
                 ),
               ],
             ),
@@ -50,50 +74,66 @@ class SeniorDashboard extends StatelessWidget {
                 crossAxisSpacing: 15,
                 mainAxisSpacing: 15,
                 children: [
-                   PlanetItem(
+                  PlanetItem(
                     title: "Mercury",
                     img: 'assets/images/mercury_dashboard_img.png',
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => const MercuryLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MercuryLearningPage(),
+                        ),
+                      );
                     },
                   ),
-                   PlanetItem(
+                  PlanetItem(
                     title: "Venus",
                     img: 'assets/images/venus_dashboard_img.png',
                     onTap: () {
-
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const VenusLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const VenusLearningPage(),
+                        ),
+                      );
                     },
-
                   ),
                   PlanetItem(
                     title: "Earth",
                     img: 'assets/images/earth_dashboard_pic.png',
                     onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => const EarthLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const EarthLearningPage(),
+                        ),
+                      );
                     },
                   ),
-              
+
                   PlanetItem(
                     title: "Mars",
-       
+
                     img: 'assets/images/mars_dashboard_img.png',
                     onTap: () {
-                        
-                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const MarsLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const MarsLearningPage(),
+                        ),
+                      );
                     },
                   ),
-                   PlanetItem(
+                  PlanetItem(
                     title: "Jupiter",
                     img: 'assets/images/jupiter_dashboard_img.png',
                     onTap: () {
-                        
-                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const JupiterLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const JupiterLearningPage(),
+                        ),
+                      );
                     },
                   ),
 
@@ -101,30 +141,37 @@ class SeniorDashboard extends StatelessWidget {
                     title: "Saturn",
                     img: 'assets/images/saturn_dashboard_img.png',
                     onTap: () {
-                        
-                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const  SaturnLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const SaturnLearningPage(),
+                        ),
+                      );
                     },
-
                   ),
 
-                
                   PlanetItem(
                     title: "Uranus",
                     img: 'assets/images/uranus_dashboard_img.png',
-                     onTap: () {
-                        
-                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const UranusLearningPage()));
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const UranusLearningPage(),
+                        ),
+                      );
                     },
                   ),
                   PlanetItem(
                     title: "Neptune",
                     img: 'assets/images/neptune_dashboard_img.png',
                     onTap: () {
-                        
-                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const  NeptuneLearningPage()));
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const NeptuneLearningPage(),
+                        ),
+                      );
                     },
                   ),
                 ],
@@ -139,7 +186,6 @@ class SeniorDashboard extends StatelessWidget {
 }
 
 class PlanetItem extends StatelessWidget {
-   
   final String title;
   final String img;
   final VoidCallback onTap;
@@ -161,11 +207,7 @@ class PlanetItem extends StatelessWidget {
           color: Color(0xE0599BDA),
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 10,
-              spreadRadius: 5,
-            )
+            BoxShadow(color: Colors.black26, blurRadius: 10, spreadRadius: 5),
           ],
         ),
 
@@ -175,7 +217,9 @@ class PlanetItem extends StatelessWidget {
             Expanded(
               flex: 3,
               child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
                 child: Image.asset(
                   img,
                   width: double.infinity,

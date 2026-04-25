@@ -17,15 +17,18 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
   void initState() {
     super.initState();
     // Assets থেকে শুক্রের ভিডিও লোড করা (ভিডিও পাথ নিশ্চিত করুন)
-    _videoController = VideoPlayerController.asset('assets/videos/Venus_video.mp4')
-      ..initialize().then((_) {
-        setState(() {
-          _isVideoInitialized = true;
-        });
-        _videoController.setLooping(true);
-      }).catchError((error) {
-        debugPrint("Video Error: $error");
-      });
+    _videoController =
+        VideoPlayerController.asset('assets/videos/Venus_video.mp4')
+          ..initialize()
+              .then((_) {
+                setState(() {
+                  _isVideoInitialized = true;
+                });
+                _videoController.setLooping(true);
+              })
+              .catchError((error) {
+                debugPrint("Video Error: $error");
+              });
   }
 
   @override
@@ -55,23 +58,30 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
           Image.asset(
             'assets/images/Senior_background.png',
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) =>
-              const Center(child: Icon(Icons.broken_image, color: Colors.white10)),
+            errorBuilder: (context, error, stackTrace) => const Center(
+              child: Icon(Icons.broken_image, color: Colors.white10),
+            ),
           ),
-          
+
           Column(
             children: [
               // 🔙 Back Button + Title
               Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 5, bottom: 5),
-                color: const Color.fromARGB(255, 11, 11, 11).withOpacity(0.05), 
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 5,
+                  bottom: 5,
+                ),
+                color: const Color.fromARGB(255, 11, 11, 11).withOpacity(0.05),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Colors.orangeAccent),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.orangeAccent,
+                      ),
                     ),
-                    
+
                     const SizedBox(width: 48),
                   ],
                 ),
@@ -97,10 +107,18 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
                               ),
                             ),
                             if (!_videoController.value.isPlaying)
-                              const Icon(Icons.play_circle_fill, size: 80, color: Colors.white70),
+                              const Icon(
+                                Icons.play_circle_fill,
+                                size: 80,
+                                color: Colors.white70,
+                              ),
                           ],
                         )
-                      : const Center(child: CircularProgressIndicator(color: Colors.orangeAccent)),
+                      : const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.orangeAccent,
+                          ),
+                        ),
                 ),
               ),
 
@@ -116,27 +134,33 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
                       children: [
                         _learningCard(
                           title: "🌡️ সৌরজগতের উষ্ণতম গ্রহ",
-                          content: "সূর্যের নিকটতম গ্রহ না হওয়া সত্ত্বেও শুক্র সৌরজগতের সবচেয়ে গরম গ্রহ। এর গড় তাপমাত্রা প্রায় ৪৬৪° সেলসিয়াস, যা সীসা গলানোর জন্য যথেষ্ট!",
+                          content:
+                              "সূর্যের নিকটতম গ্রহ না হওয়া সত্ত্বেও শুক্র সৌরজগতের সবচেয়ে গরম গ্রহ। এর গড় তাপমাত্রা প্রায় ৪৬৪° সেলসিয়াস, যা সীসা গলানোর জন্য যথেষ্ট!",
                         ),
                         _learningCard(
                           title: "☁️ বিষাক্ত বায়ুমণ্ডল",
-                          content: "শুক্রের বায়ুমণ্ডল অত্যন্ত ঘন এবং এটি মূলত কার্বন ডাই-অক্সাইডে পূর্ণ। এখানে সালফিউরিক অ্যাসিডের ঘন মেঘ রয়েছে যা গ্রহটিকে সবসময় ঢেকে রাখে।",
+                          content:
+                              "শুক্রের বায়ুমণ্ডল অত্যন্ত ঘন এবং এটি মূলত কার্বন ডাই-অক্সাইডে পূর্ণ। এখানে সালফিউরিক অ্যাসিডের ঘন মেঘ রয়েছে যা গ্রহটিকে সবসময় ঢেকে রাখে।",
                         ),
                         _learningCard(
                           title: "🌍 পৃথিবীর যমজ গ্রহ",
-                          content: "শুক্রকে প্রায়ই পৃথিবীর 'যমজ' বলা হয় কারণ এর আকার, ভর এবং ঘনত্ব অনেকটা আমাদের পৃথিবীর মতো। তবে এর পরিবেশ পৃথিবীর সম্পূর্ণ বিপরীত।",
+                          content:
+                              "শুক্রকে প্রায়ই পৃথিবীর 'যমজ' বলা হয় কারণ এর আকার, ভর এবং ঘনত্ব অনেকটা আমাদের পৃথিবীর মতো। তবে এর পরিবেশ পৃথিবীর সম্পূর্ণ বিপরীত।",
                         ),
                         _learningCard(
                           title: "🔄 উল্টো ঘূর্ণন",
-                          content: "বেশিরভাগ গ্রহ ঘড়ির কাঁটার বিপরীতে ঘুরলেও শুক্র ঘড়ির কাঁটার দিকে ঘোরে। এর মানে শুক্র গ্রহে সূর্য পশ্চিমে ওঠে এবং পূর্বে অস্ত যায়!",
+                          content:
+                              "বেশিরভাগ গ্রহ ঘড়ির কাঁটার বিপরীতে ঘুরলেও শুক্র ঘড়ির কাঁটার দিকে ঘোরে। এর মানে শুক্র গ্রহে সূর্য পশ্চিমে ওঠে এবং পূর্বে অস্ত যায়!",
                         ),
                         _learningCard(
                           title: "⏳ বড় দিন, ছোট বছর",
-                          content: "শুক্র নিজের অক্ষে অত্যন্ত ধীরগতিতে ঘোরে। এর এক দিন পৃথিবীর ২৪৩ দিনের সমান, যা এর এক বছরের (২২৫ দিন) চেয়েও বড়!",
+                          content:
+                              "শুক্র নিজের অক্ষে অত্যন্ত ধীরগতিতে ঘোরে। এর এক দিন পৃথিবীর ২৪৩ দিনের সমান, যা এর এক বছরের (২২৫ দিন) চেয়েও বড়!",
                         ),
                         _learningCard(
                           title: "✨ ভোরের তারা ও সন্ধ্যার তারা",
-                          content: "পৃথিবী থেকে শুক্রকে খুব উজ্জ্বল দেখায়। সূর্যোদয়ের আগে একে 'ভোরের তারা' এবং সূর্যাস্তের পর 'সন্ধ্যার তারা' হিসেবে দেখা যায়।",
+                          content:
+                              "পৃথিবী থেকে শুক্রকে খুব উজ্জ্বল দেখায়। সূর্যোদয়ের আগে একে 'ভোরের তারা' এবং সূর্যাস্তের পর 'সন্ধ্যার তারা' হিসেবে দেখা যায়।",
                         ),
                         const SizedBox(height: 20),
                       ],
@@ -150,7 +174,8 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
                 padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
                 child: ElevatedButton(
                   onPressed: () {
-                    if (_isVideoInitialized && _videoController.value.isPlaying) {
+                    if (_isVideoInitialized &&
+                        _videoController.value.isPlaying) {
                       _videoController.pause();
                     }
                     Navigator.push(
@@ -163,11 +188,20 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 60),
                     elevation: 4,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
-                  child: const Text("🚀 কুইজ শুরু করো", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold,color: Colors.white)),
+                  child: const Text(
+                    "🚀 কুইজ শুরু করো",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -181,16 +215,33 @@ class _VenusLearningPageState extends State<VenusLearningPage> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.orange.shade50.withOpacity(0.08), 
+        color: Colors.orange.shade50.withOpacity(0.08),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.orangeAccent.withOpacity(0.2), width: 1),
+        border: Border.all(
+          color: Colors.orangeAccent.withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 47, 64, 222))),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 47, 64, 222),
+            ),
+          ),
           const SizedBox(height: 8),
-          Text(content, style: const TextStyle(fontSize: 15, color: Color.fromARGB(255, 13, 13, 13), height: 1.5)),
+          Text(
+            content,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Color.fromARGB(255, 13, 13, 13),
+              height: 1.5,
+            ),
+          ),
         ],
       ),
     );
@@ -212,16 +263,66 @@ class _VenusQuizPageState extends State<VenusQuizPage> {
   late List<Question> quizQuestions;
 
   List<Question> allQuestions = [
-    Question("সৌরজগতের উষ্ণতম গ্রহ কোনটি?", ["বুধ", "মঙ্গল", "শুক্র", "বৃহস্পতি"], 2),
-    Question("শুক্রের বায়ুমণ্ডল মূলত কোন গ্যাসে পূর্ণ?", ["অক্সিজেন", "নাইট্রোজেন", "কার্বন ডাই-অক্সাইড", "মিথেন"], 2),
-    Question("কোন গ্রহকে পৃথিবীর 'যমজ' বলা হয়?", ["মঙ্গল", "শুক্র", "ইউরেনাস", "নেপচুন"], 1),
-    Question("শুক্র গ্রহে সূর্য কোন দিকে উদিত হয়?", ["পূর্ব", "পশ্চিম", "উত্তর", "দক্ষিণ"], 1),
-    Question("শুক্রের এক দিন পৃথিবীর কত দিনের সমান?", ["২৪৩ দিন", "৩৬৫ দিন", "১০০ দিন", "১০ দিন"], 0),
-    Question("শুক্রের আকাশে কিসের ঘন মেঘ রয়েছে?", ["পানির কণা", "সালফিউরিক অ্যাসিড", "ধুলাবালি", "বরফ"], 1),
-    Question("শুক্রকে ভোরের আকাশে দেখলে কী বলা হয়?", ["লাল তারা", "ভোরের তারা", "ধুমকেতু", "উল্কা"], 1),
-    Question("শুক্র সূর্য থেকে দূরত্বের দিক দিয়ে কততম গ্রহ?", ["প্রথম", "দ্বিতীয়", "তৃতীয়", "চতুর্থ"], 1),
-    Question("শুক্রের কয়টি চাঁদ বা প্রাকৃতিক উপগ্রহ আছে?", ["১টি", "২টি", "৫টি", "একটিও নেই"], 3),
-    Question("কেন শুক্র বুধের চেয়েও বেশি গরম?", ["সূর্যের কাছে বলে", "ঘন বায়ুমণ্ডলে গ্রিনহাউস প্রভাবের জন্য", "অনেক আগ্নেয়গিরি আছে বলে", "এর আকার বড় বলে"], 1),
+    Question("সৌরজগতের উষ্ণতম গ্রহ কোনটি?", [
+      "বুধ",
+      "মঙ্গল",
+      "শুক্র",
+      "বৃহস্পতি",
+    ], 2),
+    Question("শুক্রের বায়ুমণ্ডল মূলত কোন গ্যাসে পূর্ণ?", [
+      "অক্সিজেন",
+      "নাইট্রোজেন",
+      "কার্বন ডাই-অক্সাইড",
+      "মিথেন",
+    ], 2),
+    Question("কোন গ্রহকে পৃথিবীর 'যমজ' বলা হয়?", [
+      "মঙ্গল",
+      "শুক্র",
+      "ইউরেনাস",
+      "নেপচুন",
+    ], 1),
+    Question("শুক্র গ্রহে সূর্য কোন দিকে উদিত হয়?", [
+      "পূর্ব",
+      "পশ্চিম",
+      "উত্তর",
+      "দক্ষিণ",
+    ], 1),
+    Question("শুক্রের এক দিন পৃথিবীর কত দিনের সমান?", [
+      "২৪৩ দিন",
+      "৩৬৫ দিন",
+      "১০০ দিন",
+      "১০ দিন",
+    ], 0),
+    Question("শুক্রের আকাশে কিসের ঘন মেঘ রয়েছে?", [
+      "পানির কণা",
+      "সালফিউরিক অ্যাসিড",
+      "ধুলাবালি",
+      "বরফ",
+    ], 1),
+    Question("শুক্রকে ভোরের আকাশে দেখলে কী বলা হয়?", [
+      "লাল তারা",
+      "ভোরের তারা",
+      "ধুমকেতু",
+      "উল্কা",
+    ], 1),
+    Question("শুক্র সূর্য থেকে দূরত্বের দিক দিয়ে কততম গ্রহ?", [
+      "প্রথম",
+      "দ্বিতীয়",
+      "তৃতীয়",
+      "চতুর্থ",
+    ], 1),
+    Question("শুক্রের কয়টি চাঁদ বা প্রাকৃতিক উপগ্রহ আছে?", [
+      "১টি",
+      "২টি",
+      "৫টি",
+      "একটিও নেই",
+    ], 3),
+    Question("কেন শুক্র বুধের চেয়েও বেশি গরম?", [
+      "সূর্যের কাছে বলে",
+      "ঘন বায়ুমণ্ডলে গ্রিনহাউস প্রভাবের জন্য",
+      "অনেক আগ্নেয়গিরি আছে বলে",
+      "এর আকার বড় বলে",
+    ], 1),
   ];
 
   @override
@@ -237,7 +338,16 @@ class _VenusQuizPageState extends State<VenusQuizPage> {
       setState(() => current++);
     } else {
       // ResultPage আপনার প্রোজেক্টে আগে থেকেই তৈরি করা আছে বলে ধরে নিচ্ছি
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ResultPage(score: score)));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => ResultPage(
+            score: score,
+            total: quizQuestions.length,
+            moduleId: 'venus',
+          ),
+        ),
+      );
     }
   }
 
@@ -256,9 +366,21 @@ class _VenusQuizPageState extends State<VenusQuizPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            LinearProgressIndicator(value: (current + 1) / 10, backgroundColor: Colors.white12, color: Colors.orangeAccent),
+            LinearProgressIndicator(
+              value: (current + 1) / 10,
+              backgroundColor: Colors.white12,
+              color: Colors.orangeAccent,
+            ),
             const SizedBox(height: 30),
-            Text(q.question, textAlign: TextAlign.center, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.orangeAccent)),
+            Text(
+              q.question,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.orangeAccent,
+              ),
+            ),
             const SizedBox(height: 30),
             ...List.generate(q.options.length, (i) {
               return Padding(
@@ -269,12 +391,20 @@ class _VenusQuizPageState extends State<VenusQuizPage> {
                     backgroundColor: Colors.grey.shade900,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
-                  child: Text(q.options[i], style: const TextStyle(fontSize: 18, color: Colors.orangeAccent)),
+                  child: Text(
+                    q.options[i],
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.orangeAccent,
+                    ),
+                  ),
                 ),
               );
-            })
+            }),
           ],
         ),
       ),

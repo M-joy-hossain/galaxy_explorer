@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:galaxy_explorer/services/leaderboard_service.dart';
 
 class NeptuneLearningPage extends StatefulWidget {
   const NeptuneLearningPage({super.key});
@@ -57,23 +58,31 @@ class _NeptuneLearningPageState extends State<NeptuneLearningPage> {
             children: [
               // HEADER (ব্যালেন্স করার জন্য টপ প্যাডিং)
               Padding(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 10),
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 10,
+                ),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Colors.cyanAccent),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.cyanAccent,
+                      ),
                     ),
                     const Expanded(
                       child: Text(
                         "🪐 নেপচুন (Neptune)",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 1.2,
-                            shadows: [Shadow(blurRadius: 15, color: Colors.black54)]),
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 1.2,
+                          shadows: [
+                            Shadow(blurRadius: 15, color: Colors.black54),
+                          ],
+                        ),
                       ),
                     ),
                     const SizedBox(width: 48),
@@ -90,7 +99,10 @@ class _NeptuneLearningPageState extends State<NeptuneLearningPage> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
-                      BoxShadow(color: Colors.cyanAccent.withOpacity(0.2), blurRadius: 20)
+                      BoxShadow(
+                        color: Colors.cyanAccent.withOpacity(0.2),
+                        blurRadius: 20,
+                      ),
                     ],
                     border: Border.all(color: Colors.white24),
                     color: Colors.black45,
@@ -106,11 +118,18 @@ class _NeptuneLearningPageState extends State<NeptuneLearningPage> {
                                 child: VideoPlayer(_videoController),
                               ),
                               if (!_videoController.value.isPlaying)
-                                const Icon(Icons.play_circle_fill,
-                                    size: 70, color: Colors.white),
+                                const Icon(
+                                  Icons.play_circle_fill,
+                                  size: 70,
+                                  color: Colors.white,
+                                ),
                             ],
                           )
-                        : const Center(child: CircularProgressIndicator(color: Colors.cyanAccent)),
+                        : const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.cyanAccent,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -120,12 +139,30 @@ class _NeptuneLearningPageState extends State<NeptuneLearningPage> {
                 child: ListView(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   children: [
-                    _card("🪐 নেপচুন গ্রহ", "নেপচুন সৌরজগতের অষ্টম ও সবচেয়ে দূরের গ্রহ।"),
-                    _card("🌊 নীল গ্রহ", "মিথেন গ্যাসের কারণে নেপচুন গাঢ় নীল রঙের দেখায়।"),
-                    _card("🌪️ প্রবল ঝড়", "নেপচুনে সৌরজগতের সবচেয়ে শক্তিশালী বাতাস ও ঝড় হয়।"),
-                    _card("❄️ অত্যন্ত ঠান্ডা", "সূর্য থেকে অনেক দূরে হওয়ায় এটি খুব ঠান্ডা গ্রহ।"),
-                    _card("🌙 চাঁদ", "নেপচুনের ১৪টি চাঁদ আছে, যার মধ্যে ট্রাইটন সবচেয়ে বড়।"),
-                    _card("🌀 গ্রেট ডার্ক স্পট", "নেপচুনে বিশাল ঝড় দেখা যায় যাকে গ্রেট ডার্ক স্পট বলা হয়।"),
+                    _card(
+                      "🪐 নেপচুন গ্রহ",
+                      "নেপচুন সৌরজগতের অষ্টম ও সবচেয়ে দূরের গ্রহ।",
+                    ),
+                    _card(
+                      "🌊 নীল গ্রহ",
+                      "মিথেন গ্যাসের কারণে নেপচুন গাঢ় নীল রঙের দেখায়।",
+                    ),
+                    _card(
+                      "🌪️ প্রবল ঝড়",
+                      "নেপচুনে সৌরজগতের সবচেয়ে শক্তিশালী বাতাস ও ঝড় হয়।",
+                    ),
+                    _card(
+                      "❄️ অত্যন্ত ঠান্ডা",
+                      "সূর্য থেকে অনেক দূরে হওয়ায় এটি খুব ঠান্ডা গ্রহ।",
+                    ),
+                    _card(
+                      "🌙 চাঁদ",
+                      "নেপচুনের ১৪টি চাঁদ আছে, যার মধ্যে ট্রাইটন সবচেয়ে বড়।",
+                    ),
+                    _card(
+                      "🌀 গ্রেট ডার্ক স্পট",
+                      "নেপচুনে বিশাল ঝড় দেখা যায় যাকে গ্রেট ডার্ক স্পট বলা হয়।",
+                    ),
                     const SizedBox(height: 20),
                   ],
                 ),
@@ -143,22 +180,37 @@ class _NeptuneLearningPageState extends State<NeptuneLearningPage> {
                       colors: [Color(0xff00d2ff), Color(0xff3a7bd5)],
                     ),
                     boxShadow: [
-                      BoxShadow(color: Colors.blue.withOpacity(0.5), blurRadius: 10, offset: const Offset(0, 5))
+                      BoxShadow(
+                        color: Colors.blue.withOpacity(0.5),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
                     ],
                   ),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                      backgroundColor: Colors.transparent,
+                      shadowColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const NeptuneQuizPage()),
+                        MaterialPageRoute(
+                          builder: (_) => const NeptuneQuizPage(),
+                        ),
                       );
                     },
-                    child: const Text("🚀 কুইজ শুরু করো",
-                        style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+                    child: const Text(
+                      "🚀 কুইজ শুরু করো",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -175,28 +227,39 @@ class _NeptuneLearningPageState extends State<NeptuneLearningPage> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 101, 95, 95).withOpacity(0.2), // কার্ড অনেক বেশি উজ্জ্বল করা হয়েছে
+        color: const Color.fromARGB(
+          255,
+          101,
+          95,
+          95,
+        ).withOpacity(0.2), // কার্ড অনেক বেশি উজ্জ্বল করা হয়েছে
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: const Color.fromARGB(77, 10, 10, 10)),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5)
+          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 5),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 15, 15, 15))),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 15, 15, 15),
+            ),
+          ),
           const SizedBox(height: 6),
-          Text(content,
-              style: const TextStyle(
-                  color: Color.fromARGB(255, 11, 11, 11), 
-                  fontSize: 16, 
-                  fontWeight: FontWeight.w500,
-                  height: 1.4)),
+          Text(
+            content,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 11, 11, 11),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              height: 1.4,
+            ),
+          ),
         ],
       ),
     );
@@ -223,16 +286,66 @@ class _NeptuneQuizPageState extends State<NeptuneQuizPage> {
   int score = 0;
 
   final List<Question> questions = [
-    Question("সৌরজগতের অষ্টম গ্রহ কোনটি?", ["ইউরেনাস", "নেপচুন", "শনি", "মঙ্গল"], 1),
-    Question("নেপচুন গ্রহের রঙ গাঢ় নীল কেন?", ["পানির জন্য", "মিথেন গ্যাসের জন্য", "আগুনের জন্য", "বরফের জন্য"], 1),
-    Question("নেপচুনের সবচেয়ে বড় চাঁদের নাম কী?", ["টাইটান", "ইউরোপা", "ট্রাইটন", "আইও"], 2),
-    Question("নেপচুনের বাতাসে কীসের পরিমাণ বেশি?", ["অক্সিজেন", "হাইড্রোজেন ও হিলিয়াম", "কার্বন", "নাইট্রোজেন"], 1),
-    Question("নেপচুনে যে বিশাল ঝড় দেখা যায় তাকে কী বলে?", ["রেড স্পট", "গ্রেট ডার্ক স্পট", "ব্লু আই", "হোয়াইট ক্লাউড"], 1),
-    Question("নেপচুন সূর্য থেকে কত দূরে অবস্থিত?", ["সবচেয়ে কাছে", "৩য় স্থানে", "৫ম স্থানে", "সবচেয়ে দূরে"], 3),
-    Question("নেপচুনের মোট কয়টি চাঁদ আছে?", ["৫টি", "১০টি", "১৪টি", "২০টি"], 2),
-    Question("নেপচুন কী ধরনের গ্রহ?", ["পাথুরে গ্রহ", "আইস জায়ান্ট", "জ্বলন্ত গ্রহ", "ছোট গ্রহ"], 1),
-    Question("নেপচুনের তাপমাত্রা কেমন?", ["অত্যন্ত গরম", "মাঝারি", "অত্যন্ত ঠান্ডা", "খুব আরামদায়ক"], 2),
-    Question("নেপচুন সূর্যকে একবার প্রদক্ষিণ করতে কত সময় নেয়?", ["১৬৫ বছর", "৫০ বছর", "১০ বছর", "১ বছর"], 0),
+    Question("সৌরজগতের অষ্টম গ্রহ কোনটি?", [
+      "ইউরেনাস",
+      "নেপচুন",
+      "শনি",
+      "মঙ্গল",
+    ], 1),
+    Question("নেপচুন গ্রহের রঙ গাঢ় নীল কেন?", [
+      "পানির জন্য",
+      "মিথেন গ্যাসের জন্য",
+      "আগুনের জন্য",
+      "বরফের জন্য",
+    ], 1),
+    Question("নেপচুনের সবচেয়ে বড় চাঁদের নাম কী?", [
+      "টাইটান",
+      "ইউরোপা",
+      "ট্রাইটন",
+      "আইও",
+    ], 2),
+    Question("নেপচুনের বাতাসে কীসের পরিমাণ বেশি?", [
+      "অক্সিজেন",
+      "হাইড্রোজেন ও হিলিয়াম",
+      "কার্বন",
+      "নাইট্রোজেন",
+    ], 1),
+    Question("নেপচুনে যে বিশাল ঝড় দেখা যায় তাকে কী বলে?", [
+      "রেড স্পট",
+      "গ্রেট ডার্ক স্পট",
+      "ব্লু আই",
+      "হোয়াইট ক্লাউড",
+    ], 1),
+    Question("নেপচুন সূর্য থেকে কত দূরে অবস্থিত?", [
+      "সবচেয়ে কাছে",
+      "৩য় স্থানে",
+      "৫ম স্থানে",
+      "সবচেয়ে দূরে",
+    ], 3),
+    Question("নেপচুনের মোট কয়টি চাঁদ আছে?", [
+      "৫টি",
+      "১০টি",
+      "১৪টি",
+      "২০টি",
+    ], 2),
+    Question("নেপচুন কী ধরনের গ্রহ?", [
+      "পাথুরে গ্রহ",
+      "আইস জায়ান্ট",
+      "জ্বলন্ত গ্রহ",
+      "ছোট গ্রহ",
+    ], 1),
+    Question("নেপচুনের তাপমাত্রা কেমন?", [
+      "অত্যন্ত গরম",
+      "মাঝারি",
+      "অত্যন্ত ঠান্ডা",
+      "খুব আরামদায়ক",
+    ], 2),
+    Question("নেপচুন সূর্যকে একবার প্রদক্ষিণ করতে কত সময় নেয়?", [
+      "১৬৫ বছর",
+      "৫০ বছর",
+      "১০ বছর",
+      "১ বছর",
+    ], 0),
   ];
 
   void answer(int i) {
@@ -242,7 +355,9 @@ class _NeptuneQuizPageState extends State<NeptuneQuizPage> {
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ResultPage(score: score, total: questions.length)),
+        MaterialPageRoute(
+          builder: (_) => ResultPage(score: score, total: questions.length),
+        ),
       );
     }
   }
@@ -253,7 +368,7 @@ class _NeptuneQuizPageState extends State<NeptuneQuizPage> {
     return Scaffold(
       backgroundColor: const Color(0xFF000B18),
       appBar: AppBar(
-        title: Text("প্রশ্ন ${current + 1}/10"), 
+        title: Text("প্রশ্ন ${current + 1}/10"),
         backgroundColor: Colors.blueAccent,
         elevation: 0,
       ),
@@ -261,9 +376,21 @@ class _NeptuneQuizPageState extends State<NeptuneQuizPage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            LinearProgressIndicator(value: (current + 1) / 10, color: Colors.cyanAccent, backgroundColor: Colors.white10),
+            LinearProgressIndicator(
+              value: (current + 1) / 10,
+              color: Colors.cyanAccent,
+              backgroundColor: Colors.white10,
+            ),
             const SizedBox(height: 40),
-            Text(q.question, textAlign: TextAlign.center, style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
+            Text(
+              q.question,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 40),
             Expanded(
               child: ListView.builder(
@@ -273,15 +400,21 @@ class _NeptuneQuizPageState extends State<NeptuneQuizPage> {
                   child: ElevatedButton(
                     onPressed: () => answer(i),
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white.withOpacity(0.1),
-                        padding: const EdgeInsets.all(18),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15), 
-                        side: const BorderSide(color: Colors.white24))),
-                    child: Text(q.options[i], style: const TextStyle(fontSize: 18, color: Colors.white)),
+                      backgroundColor: Colors.white.withOpacity(0.1),
+                      padding: const EdgeInsets.all(18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                        side: const BorderSide(color: Colors.white24),
+                      ),
+                    ),
+                    child: Text(
+                      q.options[i],
+                      style: const TextStyle(fontSize: 18, color: Colors.white),
+                    ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -305,29 +438,85 @@ class ResultPage extends StatelessWidget {
           children: [
             const Icon(Icons.stars, color: Colors.cyanAccent, size: 80),
             const SizedBox(height: 20),
-            const Text("কুইজ সম্পন্ন হয়েছে!", style: TextStyle(color: Colors.cyanAccent, fontSize: 24, fontWeight: FontWeight.bold)),
+            const Text(
+              "কুইজ সম্পন্ন হয়েছে!",
+              style: TextStyle(
+                color: Colors.cyanAccent,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 10),
-            Text("আপনার স্কোর: $score / $total", style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold)),
+            Text(
+              "আপনার স্কোর: $score / $total",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 40),
             SizedBox(
               height: 250,
-              child: PieChart(PieChartData(sections: [
-                PieChartSectionData(value: score.toDouble(), color: Colors.greenAccent, title: 'সঠিক', radius: 65, 
-                titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                PieChartSectionData(value: (total - score).toDouble(), color: Colors.redAccent, title: 'ভুল', radius: 65,
-                 titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-              ])),
+              child: PieChart(
+                PieChartData(
+                  sections: [
+                    PieChartSectionData(
+                      value: score.toDouble(),
+                      color: Colors.greenAccent,
+                      title: 'সঠিক',
+                      radius: 65,
+                      titleStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    PieChartSectionData(
+                      value: (total - score).toDouble(),
+                      color: Colors.redAccent,
+                      title: 'ভুল',
+                      radius: 65,
+                      titleStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 50),
             ElevatedButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () async {
+                await LeaderboardService.instance.saveSeniorQuizAttempt(
+                  moduleId: 'neptune',
+                  score: score,
+                  total: total,
+                );
+                if (!context.mounted) {
+                  return;
+                }
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.cyanAccent, 
-                padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))
+                backgroundColor: Colors.cyanAccent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 60,
+                  vertical: 15,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
-              child: const Text("ফিরে যাও", style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold)),
-            )
+              child: const Text(
+                "ফিরে যাও",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ],
         ),
       ),

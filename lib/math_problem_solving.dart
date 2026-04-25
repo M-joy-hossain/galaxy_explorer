@@ -9,7 +9,8 @@ class MathProblemSolving extends StatefulWidget {
   _MathProblemSolvingState createState() => _MathProblemSolvingState();
 }
 
-class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProviderStateMixin {
+class _MathProblemSolvingState extends State<MathProblemSolving>
+    with TickerProviderStateMixin {
   int num1 = 3;
   int num2 = 2;
   int score = 0;
@@ -117,11 +118,25 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
       ),
       body: Stack(
         children: [
-          const Positioned.fill(child: Center(child: Text("✨ . * . ✨ . *", style: TextStyle(color: Colors.white24, fontSize: 30)))),
+          const Positioned.fill(
+            child: Center(
+              child: Text(
+                "✨ . * . ✨ . *",
+                style: TextStyle(color: Colors.white24, fontSize: 30),
+              ),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Score: $score", style: const TextStyle(color: Colors.cyanAccent, fontSize: 24, fontWeight: FontWeight.bold)),
+              Text(
+                "Score: $score",
+                style: const TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 50),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +144,14 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
                   _buildObjectGroup(num1, "🚀"),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(isAddition ? "+" : "-", style: const TextStyle(color: Colors.orange, fontSize: 50, fontWeight: FontWeight.bold)),
+                    child: Text(
+                      isAddition ? "+" : "-",
+                      style: const TextStyle(
+                        color: Colors.orange,
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                   _buildObjectGroup(num2, isAddition ? "🚀" : "👽"),
                 ],
@@ -145,20 +167,42 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
                 },
               ),
               const SizedBox(height: 40),
-              const Text("How many are left?", style: TextStyle(color: Colors.white70, fontSize: 20)),
+              const Text(
+                "What is the result?",
+                style: TextStyle(color: Colors.white70, fontSize: 20),
+              ),
               const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: options.map((opt) => ElevatedButton(
-                  onPressed: () => _checkAnswer(opt),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                    side: const BorderSide(color: Colors.cyanAccent, width: 1),
-                  ),
-                  child: Text("$opt", style: const TextStyle(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold)),
-                )).toList(),
+                children: options
+                    .map(
+                      (opt) => ElevatedButton(
+                        onPressed: () => _checkAnswer(opt),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 35,
+                            vertical: 20,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          side: const BorderSide(
+                            color: Colors.cyanAccent,
+                            width: 1,
+                          ),
+                        ),
+                        child: Text(
+                          "$opt",
+                          style: const TextStyle(
+                            fontSize: 28,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),
@@ -171,12 +215,18 @@ class _MathProblemSolvingState extends State<MathProblemSolving> with TickerProv
     return Container(
       constraints: const BoxConstraints(maxWidth: 120),
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(15)),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Wrap(
         alignment: WrapAlignment.center,
         spacing: 5,
         runSpacing: 5,
-        children: List.generate(count, (index) => Text(emoji, style: const TextStyle(fontSize: 25))),
+        children: List.generate(
+          count,
+          (index) => Text(emoji, style: const TextStyle(fontSize: 25)),
+        ),
       ),
     );
   }
@@ -188,7 +238,12 @@ class SpaceMathResult extends StatelessWidget {
   final int correct;
   final int total;
 
-  const SpaceMathResult({super.key, required this.score, required this.correct, required this.total});
+  const SpaceMathResult({
+    super.key,
+    required this.score,
+    required this.correct,
+    required this.total,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -202,11 +257,21 @@ class SpaceMathResult extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("🎊 CONGRATULATIONS! 🎊", style: TextStyle(color: Colors.yellowAccent, fontSize: 28, fontWeight: FontWeight.bold)),
+              const Text(
+                "🎊 CONGRATULATIONS! 🎊",
+                style: TextStyle(
+                  color: Colors.yellowAccent,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 10),
-              const Text("You are a Space Math Hero! 👨‍🚀", style: TextStyle(color: Colors.white70, fontSize: 18)),
+              const Text(
+                "You are a Space Math Hero! 👨‍🚀",
+                style: TextStyle(color: Colors.white70, fontSize: 18),
+              ),
               const SizedBox(height: 40),
-              
+
               // Pie Chart
               SizedBox(
                 height: 200,
@@ -218,14 +283,20 @@ class SpaceMathResult extends StatelessWidget {
                         color: Colors.greenAccent,
                         title: 'Correct',
                         radius: 60,
-                        titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                        titleStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                       PieChartSectionData(
                         value: wrong.toDouble(),
                         color: Colors.redAccent,
                         title: 'Wrong',
                         radius: 60,
-                        titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+                        titleStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                     centerSpaceRadius: 40,
@@ -233,21 +304,41 @@ class SpaceMathResult extends StatelessWidget {
                   ),
                 ),
               ),
-              
+
               const SizedBox(height: 40),
-              Text("Final Score: $score", style: const TextStyle(color: Colors.cyanAccent, fontSize: 32, fontWeight: FontWeight.bold)),
+              Text(
+                "Final Score: $score",
+                style: const TextStyle(
+                  color: Colors.cyanAccent,
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 50),
-              
+
               ElevatedButton.icon(
                 onPressed: () {
-                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const MathProblemSolving()));
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MathProblemSolving(),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.refresh, color: Colors.white),
-                label: const Text("Play Again", style: TextStyle(fontSize: 20, color: Colors.white)),
+                label: const Text(
+                  "Play Again",
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 15,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
               ),
             ],

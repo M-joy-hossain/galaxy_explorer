@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:galaxy_explorer/services/leaderboard_service.dart';
 
 class EarthLearningPage extends StatefulWidget {
   const EarthLearningPage({super.key});
@@ -18,15 +19,17 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
     super.initState();
     // Assets থেকে ভিডিও লোড করা (ভিডিও পাথটি নিশ্চিত করুন)
     _videoController = VideoPlayerController.asset('assets/videos/earth.mp4')
-      ..initialize().then((_) {
-        setState(() {
-          _isVideoInitialized = true;
-        });
-        _videoController.setLooping(true);
-        // অটোপ্লে বন্ধ রাখা হয়েছে সমস্যা সমাধানের জন্য
-      }).catchError((error) {
-        debugPrint("Video Error: $error");
-      });
+      ..initialize()
+          .then((_) {
+            setState(() {
+              _isVideoInitialized = true;
+            });
+            _videoController.setLooping(true);
+            // অটোপ্লে বন্ধ রাখা হয়েছে সমস্যা সমাধানের জন্য
+          })
+          .catchError((error) {
+            debugPrint("Video Error: $error");
+          });
   }
 
   @override
@@ -57,27 +60,32 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
           Image.asset(
             'assets/images/Senior_background.png',
             fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) =>
-              const Center(child: Icon(Icons.broken_image, color: Colors.white10)),
+            errorBuilder: (context, error, stackTrace) => const Center(
+              child: Icon(Icons.broken_image, color: Colors.white10),
+            ),
           ),
-          
+
           // 📜 CONTENT Overlay
           Column(
             children: [
               // 🔙 Back Button + Title
               Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 5, bottom: 5),
-                color: Colors.white.withOpacity(0.05), 
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 5,
+                  bottom: 5,
+                ),
+                color: Colors.white.withOpacity(0.05),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Colors.blueAccent),
-                    ),
-                     SizedBox(
-                        height: 40,
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.blueAccent,
                       ),
-                
+                    ),
+                    SizedBox(height: 40),
+
                     const SizedBox(width: 48),
                   ],
                 ),
@@ -117,7 +125,11 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
                               ),
                           ],
                         )
-                      : const Center(child: CircularProgressIndicator(color: Colors.blueAccent)),
+                      : const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.blueAccent,
+                          ),
+                        ),
                 ),
               ),
 
@@ -134,49 +146,57 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
                         // সেকশন ১: আমাদের বাসস্থান
                         _learningCard(
                           title: "🏠 পৃথিবী আমাদের ঘর",
-                          content: "পৃথিবী হলো সেই গ্রহ যেখানে আমরা বাস করি। মহাবিশ্বের অগণিত গ্রহের মধ্যে এটিই একমাত্র গ্রহ যেখানে এখন পর্যন্ত জীবনের অস্তিত্ব পাওয়া গেছে। এটি আমাদের ধারন করে আছে।",
+                          content:
+                              "পৃথিবী হলো সেই গ্রহ যেখানে আমরা বাস করি। মহাবিশ্বের অগণিত গ্রহের মধ্যে এটিই একমাত্র গ্রহ যেখানে এখন পর্যন্ত জীবনের অস্তিত্ব পাওয়া গেছে। এটি আমাদের ধারন করে আছে।",
                         ),
-                        
+
                         // সেকশন ২: কেন পৃথিবী বিশেষ?
                         _learningCard(
                           title: "✨ কেন এটি বিশেষ?",
-                          content: "জীবন ধারণের জন্য যা যা প্রয়োজন, তার সবই পৃথিবীতে আছে। এখানে আমাদের শ্বাস নেওয়ার জন্য আছে বাতাস (অক্সিজেন), পান করার জন্য সুপেয় পানি এবং বসবাস ও খাদ্য উৎপাদনের জন্য আছে সমতল ভূমি বা স্থলভাগ।",
+                          content:
+                              "জীবন ধারণের জন্য যা যা প্রয়োজন, তার সবই পৃথিবীতে আছে। এখানে আমাদের শ্বাস নেওয়ার জন্য আছে বাতাস (অক্সিজেন), পান করার জন্য সুপেয় পানি এবং বসবাস ও খাদ্য উৎপাদনের জন্য আছে সমতল ভূমি বা স্থলভাগ।",
                         ),
 
                         // সেকশন ৩: সঠিক দূরত্ব ও তাপমাত্রা
                         _learningCard(
                           title: "🌡️ সঠিক দূরত্ব ও তাপমাত্রা",
-                          content: "সূর্য থেকে পৃথিবীর দূরত্ব একদম আদর্শ বা সঠিক অবস্থানে। এই নিখুঁত দূরত্বের কারণেই পৃথিবীর তাপমাত্রা খুব বেশি গরম বা খুব বেশি ঠান্ডা হয় না। এই সহনীয় তাপমাত্রা জীবজগতের টিকে থাকার জন্য অপরিহার্য।",
+                          content:
+                              "সূর্য থেকে পৃথিবীর দূরত্ব একদম আদর্শ বা সঠিক অবস্থানে। এই নিখুঁত দূরত্বের কারণেই পৃথিবীর তাপমাত্রা খুব বেশি গরম বা খুব বেশি ঠান্ডা হয় না। এই সহনীয় তাপমাত্রা জীবজগতের টিকে থাকার জন্য অপরিহার্য।",
                         ),
 
                         // সেকশন ৪: নীল গ্রহ
                         _learningCard(
                           title: "🔵 নীল গ্রহ (The Blue Planet)",
-                          content: "মহাকাশ থেকে পৃথিবীকে নীল দেখায়, তাই একে 'নীল গ্রহ' বলা হয়। এর কারণ হলো পৃথিবীর উপরিভাগের প্রায় ৭০ শতাংশই পানি। পানি জীবনের জন্য অপরিহার্য, আর এই বিপুল জলরাশির কারণেই পৃথিবী বসবাসের এত চমৎকার জায়গা।",
+                          content:
+                              "মহাকাশ থেকে পৃথিবীকে নীল দেখায়, তাই একে 'নীল গ্রহ' বলা হয়। এর কারণ হলো পৃথিবীর উপরিভাগের প্রায় ৭০ শতাংশই পানি। পানি জীবনের জন্য অপরিহার্য, আর এই বিপুল জলরাশির কারণেই পৃথিবী বসবাসের এত চমৎকার জায়গা।",
                         ),
 
                         // সেকশন ৫: পৃথিবীর চাঁদ
                         _learningCard(
                           title: "🌙 পৃথিবীর একমাত্র চাঁদ",
-                          content: "পৃথিবীর একটি মাত্র প্রাকৃতিক উপগ্রহ বা চাঁদ আছে, যা পৃথিবী থেকে প্রায় ৩,৮৪,৪০০ কিলোমিটার (২,৩৯,০০০ মাইল) দূরে অবস্থিত।",
+                          content:
+                              "পৃথিবীর একটি মাত্র প্রাকৃতিক উপগ্রহ বা চাঁদ আছে, যা পৃথিবী থেকে প্রায় ৩,৮৪,৪০০ কিলোমিটার (২,৩৯,০০০ মাইল) দূরে অবস্থিত।",
                         ),
 
                         // সেকশন ৬: চাঁদের গুরুত্ব
                         _learningCard(
                           title: "🌊 চাঁদের গুরুত্ব",
-                          content: "চাঁদ শুধু রাতের আকাশকে আলোকিতই করে না, এটি আমাদের সমুদ্রের জোয়ার-ভাটাকেও ব্যাপকভাবে প্রভাবিত করে। চাঁদের মহাকর্ষ বলের কারণেই সমুদ্রে নিয়মিত জোয়ার-ভাটা হয়।",
+                          content:
+                              "চাঁদ শুধু রাতের আকাশকে আলোকিতই করে না, এটি আমাদের সমুদ্রের জোয়ার-ভাটাকেও ব্যাপকভাবে প্রভাবিত করে। চাঁদের মহাকর্ষ বলের কারণেই সমুদ্রে নিয়মিত জোয়ার-ভাটা হয়।",
                         ),
 
                         // সেকশন ৭: বায়ুমণ্ডল বা অ্যাটমোস্ফিয়ার
                         _learningCard(
                           title: "🌬️ বায়ুমণ্ডল (Atmosphere)",
-                          content: "পৃথিবীর চারপাশে গ্যাসের একটি পাতলা স্তর রয়েছে, যাকে বায়ুমণ্ডল বলা হয়। এটি পৃথিবীর জন্য একটি সুরক্ষা কবচ।",
+                          content:
+                              "পৃথিবীর চারপাশে গ্যাসের একটি পাতলা স্তর রয়েছে, যাকে বায়ুমণ্ডল বলা হয়। এটি পৃথিবীর জন্য একটি সুরক্ষা কবচ।",
                         ),
 
                         // সেকশন ৮: বায়ুমণ্ডলের কাজ
                         _learningCard(
                           title: "🛡️ বায়ুমণ্ডলের কাজ",
-                          content: "এই বায়ুমণ্ডল সূর্যের ক্ষতিকর অতিবেগুনি রশ্মি থেকে আমাদের রক্ষা করে। এছাড়া, এটি গ্রিনহাউজ ইফেক্টের মাধ্যমে গ্রহের তাপ ধরে রেখে পৃথিবীকে জীবজগতের বসবাসের জন্য উষ্ণ রাখে।",
+                          content:
+                              "এই বায়ুমণ্ডল সূর্যের ক্ষতিকর অতিবেগুনি রশ্মি থেকে আমাদের রক্ষা করে। এছাড়া, এটি গ্রিনহাউজ ইফেক্টের মাধ্যমে গ্রহের তাপ ধরে রেখে পৃথিবীকে জীবজগতের বসবাসের জন্য উষ্ণ রাখে।",
                         ),
 
                         const SizedBox(height: 20),
@@ -192,7 +212,8 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
                 child: ElevatedButton(
                   onPressed: () {
                     // কুইজে যাওয়ার আগে ভিডিও পজ করা (সমস্যা সমাধানের জন্য)
-                    if (_isVideoInitialized && _videoController.value.isPlaying) {
+                    if (_isVideoInitialized &&
+                        _videoController.value.isPlaying) {
                       _videoController.pause();
                     }
                     Navigator.push(
@@ -214,7 +235,7 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -229,9 +250,12 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: Colors.blue.shade50.withOpacity(0.06), 
+        color: Colors.blue.shade50.withOpacity(0.06),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.blue.shade100.withOpacity(0.15), width: 1),
+        border: Border.all(
+          color: Colors.blue.shade100.withOpacity(0.15),
+          width: 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -249,7 +273,12 @@ class _EarthLearningPageState extends State<EarthLearningPage> {
             content,
             style: const TextStyle(
               fontSize: 15,
-              color: Color.fromARGB(232, 13, 13, 13), // ব্যাকগ্রাউন্ড অনুযায়ী কালার অ্যাডজাস্ট করা হয়েছে
+              color: Color.fromARGB(
+                232,
+                13,
+                13,
+                13,
+              ), // ব্যাকগ্রাউন্ড অনুযায়ী কালার অ্যাডজাস্ট করা হয়েছে
               height: 1.5,
             ),
           ),
@@ -283,16 +312,66 @@ class _EarthQuizPageState extends State<EarthQuizPage> {
 
   // আপনার দেওয়া নতুন তথ্যের ওপর ভিত্তি করে কুইজ প্রশ্ন
   List<Question> allQuestions = [
-    Question("এখন পর্যন্ত জানা তথ্যমতে, কোন গ্রহে জীবনের অস্তিত্ব আছে?", ["মঙ্গল", "বুধ", "পৃথিবী", "শুক্র"], 2),
-    Question("জীবন ধারণের জন্য পৃথিবী বিশেষ কেন?", ["বাতাস, পানি ও জমি আছে", "এটি খুব বড়", "এটি লাল রঙের", "এর অনেক চাঁদ আছে"], 0),
-    Question("সূর্য থেকে সঠিক দূরত্বের কারণে পৃথিবীর কী সুবিধা হয়?", ["পানি শুকিয়ে যায়", "তাপমাত্রা বসবাসের উপযোগী থাকে", "সবসময় রাত থাকে", "অনেক বাতাস হয়"], 1),
-    Question("পৃথিবীকে 'নীল গ্রহ' বলা হয় কেন?", ["এটি নীল রঙের গ্যাসে ঢাকা", "এর উপরিভাগে প্রচুর পানি আছে", "এটি বরফে ঢাকা", "এটি সূর্যের খুব কাছে"], 1),
-    Question("পৃথিবীর উপরিভাগের প্রায় কত অংশ পানি?", ["৫০%", "৬০%", "৭০%", "৮০%"], 2),
-    Question("পৃথিবীর চাঁদ কত দূরে অবস্থিত?", ["১,০০,০০০ কিমি", "৩,৮৪,৪০০ কিমি", "৫,০০,০০০ কিমি", "১০,০০,০০০ কিমি"], 1),
-    Question("চাঁদ আমাদের সমুদ্রের কোন বিষয়টিকে প্রভাবিত করে?", ["পানির রঙ", "জোয়ার-ভাটা", "মাছের সংখ্যা", "পানির তাপমাত্রা"], 1),
-    Question("পৃথিবীর চারপাশের গ্যাসের স্তরকে কী বলা হয়?", ["ভূত্বক", "গুরুমণ্ডল", "কেন্দ্রমণ্ডল", "বায়ুমণ্ডল"], 3),
-    Question("বায়ুমণ্ডল আমাদের কী থেকে রক্ষা করে?", ["বৃষ্টি", "সূর্যের ক্ষতিকর রশ্মি", "বাতাস", "চাঁদের আলো"], 1),
-    Question("গ্রহকে উষ্ণ রাখতে এবং ক্ষতিকর রশ্মি আটকাতে কোনটি কাজ করে?", ["পানি", "জমি", "বায়ুমণ্ডল", "চাঁদ"], 2),
+    Question("এখন পর্যন্ত জানা তথ্যমতে, কোন গ্রহে জীবনের অস্তিত্ব আছে?", [
+      "মঙ্গল",
+      "বুধ",
+      "পৃথিবী",
+      "শুক্র",
+    ], 2),
+    Question("জীবন ধারণের জন্য পৃথিবী বিশেষ কেন?", [
+      "বাতাস, পানি ও জমি আছে",
+      "এটি খুব বড়",
+      "এটি লাল রঙের",
+      "এর অনেক চাঁদ আছে",
+    ], 0),
+    Question("সূর্য থেকে সঠিক দূরত্বের কারণে পৃথিবীর কী সুবিধা হয়?", [
+      "পানি শুকিয়ে যায়",
+      "তাপমাত্রা বসবাসের উপযোগী থাকে",
+      "সবসময় রাত থাকে",
+      "অনেক বাতাস হয়",
+    ], 1),
+    Question("পৃথিবীকে 'নীল গ্রহ' বলা হয় কেন?", [
+      "এটি নীল রঙের গ্যাসে ঢাকা",
+      "এর উপরিভাগে প্রচুর পানি আছে",
+      "এটি বরফে ঢাকা",
+      "এটি সূর্যের খুব কাছে",
+    ], 1),
+    Question("পৃথিবীর উপরিভাগের প্রায় কত অংশ পানি?", [
+      "৫০%",
+      "৬০%",
+      "৭০%",
+      "৮০%",
+    ], 2),
+    Question("পৃথিবীর চাঁদ কত দূরে অবস্থিত?", [
+      "১,০০,০০০ কিমি",
+      "৩,৮৪,৪০০ কিমি",
+      "৫,০০,০০০ কিমি",
+      "১০,০০,০০০ কিমি",
+    ], 1),
+    Question("চাঁদ আমাদের সমুদ্রের কোন বিষয়টিকে প্রভাবিত করে?", [
+      "পানির রঙ",
+      "জোয়ার-ভাটা",
+      "মাছের সংখ্যা",
+      "পানির তাপমাত্রা",
+    ], 1),
+    Question("পৃথিবীর চারপাশের গ্যাসের স্তরকে কী বলা হয়?", [
+      "ভূত্বক",
+      "গুরুমণ্ডল",
+      "কেন্দ্রমণ্ডল",
+      "বায়ুমণ্ডল",
+    ], 3),
+    Question("বায়ুমণ্ডল আমাদের কী থেকে রক্ষা করে?", [
+      "বৃষ্টি",
+      "সূর্যের ক্ষতিকর রশ্মি",
+      "বাতাস",
+      "চাঁদের আলো",
+    ], 1),
+    Question("গ্রহকে উষ্ণ রাখতে এবং ক্ষতিকর রশ্মি আটকাতে কোনটি কাজ করে?", [
+      "পানি",
+      "জমি",
+      "বায়ুমণ্ডল",
+      "চাঁদ",
+    ], 2),
   ];
 
   @override
@@ -315,7 +394,13 @@ class _EarthQuizPageState extends State<EarthQuizPage> {
       // কুইজ শেষ হলে ফলাফল পেজে যাওয়া
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => ResultPage(score: score)),
+        MaterialPageRoute(
+          builder: (_) => ResultPage(
+            score: score,
+            total: quizQuestions.length,
+            moduleId: 'earth',
+          ),
+        ),
       );
     }
   }
@@ -347,7 +432,11 @@ class _EarthQuizPageState extends State<EarthQuizPage> {
             Text(
               q.question,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.orangeAccent,
+              ),
             ),
             const SizedBox(height: 30),
             // অপশন বাটন
@@ -360,16 +449,21 @@ class _EarthQuizPageState extends State<EarthQuizPage> {
                     backgroundColor: Colors.grey.shade900,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(double.infinity, 55),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     elevation: 0,
                   ),
                   child: Text(
                     q.options[i],
-                    style: const TextStyle(fontSize: 18, color: Colors.deepOrangeAccent),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.deepOrangeAccent,
+                    ),
                   ),
                 ),
               );
-            })
+            }),
           ],
         ),
       ),
@@ -381,22 +475,39 @@ class _EarthQuizPageState extends State<EarthQuizPage> {
 
 class ResultPage extends StatelessWidget {
   final int score;
-  const ResultPage({super.key, required this.score});
+  final int total;
+  final String moduleId;
+
+  const ResultPage({
+    super.key,
+    required this.score,
+    this.total = 10,
+    this.moduleId = 'earth',
+  });
 
   @override
   Widget build(BuildContext context) {
-    int wrong = 10 - score;
+    int wrong = total - score;
 
     return Scaffold(
       backgroundColor: const Color(0xFF1A0A05),
-      appBar: AppBar(title: const Text("তোমার ফলাফল"), centerTitle: true, backgroundColor: Colors.deepOrange[900], foregroundColor: Colors.white),
+      appBar: AppBar(
+        title: const Text("তোমার ফলাফল"),
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange[900],
+        foregroundColor: Colors.white,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               score >= 7 ? "🎉 চমৎকার!" : "👍 ভালো চেষ্টা!",
-              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+              style: const TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.orangeAccent,
+              ),
             ),
             const SizedBox(height: 30),
             // পাই চার্ট
@@ -410,14 +521,20 @@ class ResultPage extends StatelessWidget {
                       title: "$score সঠিক",
                       color: Colors.green,
                       radius: 60,
-                      titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      titleStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                     PieChartSectionData(
                       value: wrong.toDouble(),
                       title: "$wrong ভুল",
                       color: Colors.redAccent,
                       radius: 50,
-                      titleStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                      titleStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                   centerSpaceRadius: 40,
@@ -426,18 +543,38 @@ class ResultPage extends StatelessWidget {
             ),
             const SizedBox(height: 40),
             Text(
-              "মোট স্কোর: $score / 10",
-              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+              "মোট স্কোর: $score / $total",
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.orangeAccent,
+              ),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () => Navigator.pop(context), // ড্যাশবোর্ডে ফিরে যাওয়া
+              onPressed: () async {
+                await LeaderboardService.instance.saveSeniorQuizAttempt(
+                  moduleId: moduleId,
+                  score: score,
+                  total: total,
+                );
+                if (!context.mounted) {
+                  return;
+                }
+                Navigator.pop(context);
+              }, // ড্যাশবোর্ডে ফিরে যাওয়া
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepOrange[900],
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 15,
+                ),
               ),
-              child: const Text("ড্যাশবোর্ডে ফিরে যাও", style: TextStyle(fontSize: 16)),
+              child: const Text(
+                "ড্যাশবোর্ডে ফিরে যাও",
+                style: TextStyle(fontSize: 16),
+              ),
             ),
           ],
         ),

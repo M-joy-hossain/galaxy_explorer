@@ -8,11 +8,17 @@ class PlaceThePlanets extends StatefulWidget {
   State<PlaceThePlanets> createState() => _PlaceThePlanetsState();
 }
 
-
 class _PlaceThePlanetsState extends State<PlaceThePlanets> {
   // সূর্য থেকে সঠিক ক্রম
   final List<String> correctOrder = [
-    'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune'
+    'Mercury',
+    'Venus',
+    'Earth',
+    'Mars',
+    'Jupiter',
+    'Saturn',
+    'Uranus',
+    'Neptune',
   ];
 
   // গ্রহের বাংলা নাম
@@ -40,7 +46,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
   };
   List<String?> slots = List.filled(8, null);
   List<bool> slotCorrect = List.filled(8, false);
-  
+
   List<String> planetsToPlace = [];
   int currentPlanetIndex = 0;
   bool gameCompleted = false;
@@ -54,7 +60,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
     _initializeGame();
   }
 
-  void _initializeGame() { 
+  void _initializeGame() {
     List<String> shuffledPlanets = List.from(correctOrder);
     shuffledPlanets.shuffle();
     planetsToPlace = shuffledPlanets;
@@ -72,19 +78,22 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
       _showFeedback("❌ এই জায়গাটি ইতিমধ্যে পূরণ হয়েছে!", Colors.orange);
       return;
     }
-    
+
     //চেক করা গ্রহটি সঠিক জায়গায় বসানো হচ্ছে কিনা
     int expectedIndex = correctOrder.indexOf(data);
-    
+
     if (expectedIndex == index) {
       setState(() {
         slots[index] = data;
         slotCorrect[index] = true;
         currentPlanetIndex++;
-        
-        _showFeedback("✓ সঠিক! ${bengaliNames[data]} গ্রহটি সঠিক জায়গায় বসেছে!", Colors.green);
+
+        _showFeedback(
+          "✓ সঠিক! ${bengaliNames[data]} গ্রহটি সঠিক জায়গায় বসেছে!",
+          Colors.green,
+        );
       });
-      
+
       //সব গ্রহ বসানো শেষ হলে
       if (currentPlanetIndex == correctOrder.length) {
         setState(() {
@@ -93,20 +102,17 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
       }
     } else {
       //ভুল জায়গায় বসালে-কোন hint দেওয়া হবে না
-      _showFeedback(
-        "❌ ভুল জায়গা! আবার চেষ্টা করো।",
-        Colors.redAccent
-      );
+      _showFeedback("❌ ভুল জায়গা! আবার চেষ্টা করো।", Colors.redAccent);
     }
   }
-  
+
   void _showFeedback(String message, Color color) {
     setState(() {
       feedbackMessage = message;
       feedbackColor = color;
       showFeedback = true;
     });
-    
+
     //2 সেকেন্ড পরে ফিডব্যাক লুকানো
     Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
@@ -154,22 +160,25 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                   );
                 },
               ),
-              
+
               const SizedBox(height: 20),
-              
+
               const Text(
                 "🎉অসাধারণ!🎉",
                 style: TextStyle(
-                  fontSize: 32, 
-                  fontWeight: FontWeight.bold, 
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
-              
+
               const SizedBox(height: 15),
-              
+
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
@@ -180,11 +189,14 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                   style: TextStyle(fontSize: 18, color: Colors.white70),
                 ),
               ),
-              
+
               const SizedBox(height: 10),
-              
+
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.blue.withOpacity(0.2),
                   borderRadius: BorderRadius.circular(15),
@@ -194,13 +206,16 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                   style: TextStyle(fontSize: 16, color: Colors.yellow.shade300),
                 ),
               ),
-              
+
               const SizedBox(height: 30),
-              
+
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 15,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -216,7 +231,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
-              
+
               const SizedBox(height: 30),
             ],
           ),
@@ -249,7 +264,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
               style: TextStyle(color: Colors.white70, fontSize: 16),
             ),
           ),
-  
+
           //ফিডব্যাক মেসেজ
           AnimatedOpacity(
             opacity: showFeedback ? 1.0 : 0.0,
@@ -258,7 +273,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: feedbackColor, 
+                color: feedbackColor,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -267,9 +282,9 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
               ),
             ),
           ),
-          
+
           const SizedBox(height: 10),
-          
+
           //---ড্রপ জোন এরিয়া (Slots)---
           Expanded(
             flex: 2,
@@ -278,7 +293,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                 scrollDirection: Axis.horizontal,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                    child: Row(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //
@@ -298,7 +313,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                               ],
                             ),
                             child: ClipOval(
-                              child: Image.network(
+                              child: Image.asset(
                                 planetImages['Sun']!,
                                 width: 80,
                                 height: 80,
@@ -309,12 +324,19 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                                     decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                       gradient: RadialGradient(
-                                        colors: [Colors.orange, Colors.deepOrange],
+                                        colors: [
+                                          Colors.orange,
+                                          Colors.deepOrange,
+                                        ],
                                         stops: [0.5, 1.0],
                                       ),
                                     ),
                                     child: const Center(
-                                      child: Icon(Icons.sunny, size: 50, color: Colors.white),
+                                      child: Icon(
+                                        Icons.sunny,
+                                        size: 50,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   );
                                 },
@@ -324,22 +346,28 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                           const SizedBox(height: 8),
                           const Text(
                             "সূর্য",
-                            style: TextStyle(color: Colors.white70, fontSize: 12),
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
                           ),
                         ],
                       ),
-                      
+
                       const SizedBox(width: 20),
-                      
+
                       //গ্রহের স্লট-কোন hint দেওয়া হবে না
                       Row(
                         children: List.generate(8, (index) {
                           return DragTarget<String>(
-                            onWillAccept: (data) => slots[index] == null && !gameCompleted,
+                            onWillAccept: (data) =>
+                                slots[index] == null && !gameCompleted,
                             onAccept: (data) => handleDrop(data, index),
                             builder: (context, candidateData, rejectedData) {
                               return Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 6),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 6,
+                                ),
                                 width: 85,
                                 height: 110,
                                 child: Column(
@@ -349,8 +377,8 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                                       height: 70,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
-                                        color: slots[index] != null 
-                                            ? Colors.grey.shade800 
+                                        color: slots[index] != null
+                                            ? Colors.grey.shade800
                                             : Colors.white.withOpacity(0.05),
                                         border: Border.all(
                                           color: slotCorrect[index]
@@ -361,32 +389,39 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                                       ),
                                       child: slots[index] != null
                                           ? ClipOval(
-                                              child: Image.network(
+                                              child: Image.asset(
                                                 planetImages[slots[index]!]!,
                                                 width: 70,
                                                 height: 70,
                                                 fit: BoxFit.cover,
-                                                errorBuilder: (context, error, stackTrace) {
-                                                  return Container(
-                                                    color: Colors.grey.shade700,
-                                                    child: const Icon(
-                                                      Icons.public,
-                                                      color: Colors.white,
-                                                      size: 35,
-                                                    ),
-                                                  );
-                                                },
-                                                loadingBuilder: (context, child, loadingProgress) {
-                                                  if (loadingProgress == null) return child;
-                                                  return Center(
-                                                    child: CircularProgressIndicator(
-                                                      value: loadingProgress.expectedTotalBytes != null
-                                                          ? loadingProgress.cumulatedBytesLoaded / loadingProgress.expectedTotalBytes!
-                                                          : null,
-                                                      strokeWidth: 2,
-                                                    ),
-                                                  );
-                                                },
+                                                errorBuilder:
+                                                    (
+                                                      context,
+                                                      error,
+                                                      stackTrace,
+                                                    ) {
+                                                      return Container(
+                                                        color: Colors
+                                                            .grey
+                                                            .shade700,
+                                                        child: const Icon(
+                                                          Icons.public,
+                                                          color: Colors.white,
+                                                          size: 35,
+                                                        ),
+                                                      );
+                                                    },
+                                                // loadingBuilder: (context, child, loadingProgress) {
+                                                //   if (loadingProgress == null) return child;
+                                                //   return Center(
+                                                //     child: CircularProgressIndicator(
+                                                //       value: loadingProgress.expectedTotalBytes != null
+                                                //           ? loadingProgress.cumulatedBytesLoaded / loadingProgress.expectedTotalBytes!
+                                                //           : null,
+                                                //       strokeWidth: 2,
+                                                //     ),
+                                                //   );
+                                                // },
                                               ),
                                             )
                                           : Center(
@@ -445,14 +480,14 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                   style: TextStyle(color: Colors.white60, fontSize: 14),
                 ),
                 const SizedBox(height: 15),
-                
+
                 currentPlanetIndex < planetsToPlace.length
                     ? Draggable<String>(
                         data: planetsToPlace[currentPlanetIndex],
                         feedback: Material(
                           color: Colors.transparent,
                           child: _planetWidget(
-                            planetsToPlace[currentPlanetIndex], 
+                            planetsToPlace[currentPlanetIndex],
                             true,
                             bengaliNames[planetsToPlace[currentPlanetIndex]]!,
                           ),
@@ -460,19 +495,19 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                         childWhenDragging: Opacity(
                           opacity: 0.3,
                           child: _planetWidget(
-                            planetsToPlace[currentPlanetIndex], 
+                            planetsToPlace[currentPlanetIndex],
                             false,
                             bengaliNames[planetsToPlace[currentPlanetIndex]]!,
                           ),
                         ),
                         child: _planetWidget(
-                          planetsToPlace[currentPlanetIndex], 
+                          planetsToPlace[currentPlanetIndex],
                           false,
                           bengaliNames[planetsToPlace[currentPlanetIndex]]!,
                         ),
                       )
                     : const SizedBox(),
-                    
+
                 if (currentPlanetIndex < planetsToPlace.length) ...[
                   const SizedBox(height: 10),
                   Text(
@@ -496,31 +531,28 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
       height: isFeedback ? 120 : 100,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        boxShadow: isFeedback 
+        boxShadow: isFeedback
             ? [
                 BoxShadow(
                   color: Colors.blue.withOpacity(0.5),
                   blurRadius: 20,
                   spreadRadius: 5,
-                )
+                ),
               ]
             : [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.3),
                   blurRadius: 10,
                   spreadRadius: 2,
-                )
+                ),
               ],
-        border: Border.all(
-          color: Colors.white.withOpacity(0.5),
-          width: 2,
-        ),
+        border: Border.all(color: Colors.white.withOpacity(0.5), width: 2),
       ),
       child: ClipOval(
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Image.network(
+            Image.asset(
               planetImages[name]!,
               width: isFeedback ? 120 : 100,
               height: isFeedback ? 120 : 100,
@@ -531,11 +563,7 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
-                        Icons.public,
-                        color: Colors.white,
-                        size: 40,
-                      ),
+                      const Icon(Icons.public, color: Colors.white, size: 40),
                       const SizedBox(height: 4),
                       Text(
                         bengaliName,
@@ -546,18 +574,6 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
                         ),
                       ),
                     ],
-                  ),
-                );
-              },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(
-                  color: Colors.grey.shade800,
-                  child: const Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 3,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                    ),
                   ),
                 );
               },
@@ -593,8 +609,4 @@ class _PlaceThePlanetsState extends State<PlaceThePlanets> {
       ),
     );
   }
-}
-
-extension on ImageChunkEvent {
-  get cumulatedBytesLoaded => null;
 }

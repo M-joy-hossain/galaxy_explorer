@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:galaxy_explorer/services/leaderboard_service.dart';
 
 class UranusLearningPage extends StatefulWidget {
   const UranusLearningPage({super.key});
@@ -46,28 +47,37 @@ class _UranusLearningPageState extends State<UranusLearningPage> {
         children: [
           // Background Image
           Positioned.fill(
-            child: Image.asset('assets/images/Senior_background.png', fit: BoxFit.cover),
+            child: Image.asset(
+              'assets/images/Senior_background.png',
+              fit: BoxFit.cover,
+            ),
           ),
 
           Column(
             children: [
               // HEADER
               Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 5),
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 5,
+                ),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Colors.lightBlueAccent),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.lightBlueAccent,
+                      ),
                     ),
                     const Expanded(
                       child: Text(
                         "🪐 ইউরেনাস (Uranus)",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.lightBlueAccent),
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.lightBlueAccent,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 48),
@@ -91,7 +101,11 @@ class _UranusLearningPageState extends State<UranusLearningPage> {
                               child: VideoPlayer(_videoController),
                             ),
                             if (!_videoController.value.isPlaying)
-                              const Icon(Icons.play_circle_fill, size: 80, color: Colors.white70),
+                              const Icon(
+                                Icons.play_circle_fill,
+                                size: 80,
+                                color: Colors.white70,
+                              ),
                           ],
                         )
                       : const Center(child: CircularProgressIndicator()),
@@ -129,11 +143,16 @@ class _UranusLearningPageState extends State<UranusLearningPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.lightBlueAccent,
                     minimumSize: const Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
-                  child: const Text("🚀 কুইজ শুরু করো", style: TextStyle(fontSize: 18, color: Colors.white)),
+                  child: const Text(
+                    "🚀 কুইজ শুরু করো",
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -154,13 +173,22 @@ class _UranusLearningPageState extends State<UranusLearningPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.lightBlueAccent)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.lightBlueAccent,
+            ),
+          ),
           const SizedBox(height: 5),
-          Text(content, style: const TextStyle(color: Color.fromARGB(255, 7, 7, 7), fontSize: 15)),
+          Text(
+            content,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 7, 7, 7),
+              fontSize: 15,
+            ),
+          ),
         ],
       ),
     );
@@ -225,8 +253,15 @@ class _UranusQuizPageState extends State<UranusQuizPage> {
               color: Colors.lightBlueAccent,
             ),
             const SizedBox(height: 30),
-            Text(q.question, textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold)),
+            Text(
+              q.question,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 24,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 40),
             Expanded(
               child: ListView.builder(
@@ -239,14 +274,22 @@ class _UranusQuizPageState extends State<UranusQuizPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white10,
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                      child: Text(q.options[i], style: const TextStyle(fontSize: 18, color: Colors.white)),
+                      child: Text(
+                        q.options[i],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -265,13 +308,22 @@ class ResultPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFF001A1F),
-      appBar: AppBar(title: const Text("ফলাফল"), backgroundColor: Colors.lightBlueAccent),
+      appBar: AppBar(
+        title: const Text("ফলাফল"),
+        backgroundColor: Colors.lightBlueAccent,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("আপনার স্কোর: $score / 10",
-                style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+            Text(
+              "আপনার স্কোর: $score / 10",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 30),
             SizedBox(
               height: 250,
@@ -285,14 +337,20 @@ class ResultPage extends StatelessWidget {
                       color: Colors.green,
                       title: 'সঠিক',
                       radius: 60,
-                      titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      titleStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     PieChartSectionData(
                       value: wrong.toDouble(),
                       color: Colors.red,
                       title: 'ভুল',
                       radius: 60,
-                      titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      titleStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -300,10 +358,29 @@ class ResultPage extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.lightBlueAccent, padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15)),
-              child: const Text("ফিরে যান", style: TextStyle(fontSize: 18, color: Colors.white)),
-            )
+              onPressed: () async {
+                await LeaderboardService.instance.saveSeniorQuizAttempt(
+                  moduleId: 'uranus',
+                  score: score,
+                  total: 10,
+                );
+                if (!context.mounted) {
+                  return;
+                }
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.lightBlueAccent,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 15,
+                ),
+              ),
+              child: const Text(
+                "ফিরে যান",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),

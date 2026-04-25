@@ -5,7 +5,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:lottie/lottie.dart';
 
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -30,9 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         // Use Get.offAll instead of Navigator
-       
-       // Get.offAll(() => const Wrapper());
-        Get.offAll(() => const onboarding_screen());
+
+        Get.offAll(() => const Wrapper());
+        // Get.offAll(() => const onboarding_screen());
       }
     });
   }

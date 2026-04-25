@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:galaxy_explorer/services/leaderboard_service.dart';
 
 class SaturnLearningPage extends StatefulWidget {
   const SaturnLearningPage({super.key});
@@ -18,14 +19,16 @@ class _SaturnLearningPageState extends State<SaturnLearningPage> {
     super.initState();
 
     _videoController = VideoPlayerController.asset('assets/videos/saturn.mp4')
-      ..initialize().then((_) {
-        setState(() {
-          _isVideoInitialized = true;
-        });
-        _videoController.setLooping(true);
-      }).catchError((error) {
-        debugPrint("Video Error: $error");
-      });
+      ..initialize()
+          .then((_) {
+            setState(() {
+              _isVideoInitialized = true;
+            });
+            _videoController.setLooping(true);
+          })
+          .catchError((error) {
+            debugPrint("Video Error: $error");
+          });
   }
 
   @override
@@ -60,21 +63,27 @@ class _SaturnLearningPageState extends State<SaturnLearningPage> {
             children: [
               // HEADER
               Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 5),
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top + 5,
+                ),
                 child: Row(
                   children: [
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: const Icon(Icons.arrow_back, color: Colors.orangeAccent),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.orangeAccent,
+                      ),
                     ),
                     const Expanded(
                       child: Text(
                         "🪐 শনি (Saturn)",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.orangeAccent),
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.orangeAccent,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 48),
@@ -98,11 +107,18 @@ class _SaturnLearningPageState extends State<SaturnLearningPage> {
                               child: VideoPlayer(_videoController),
                             ),
                             if (!_videoController.value.isPlaying)
-                              const Icon(Icons.play_circle_fill,
-                                  size: 80, color: Colors.white70),
+                              const Icon(
+                                Icons.play_circle_fill,
+                                size: 80,
+                                color: Colors.white70,
+                              ),
                           ],
                         )
-                      : const Center(child: CircularProgressIndicator(color: Colors.orange)),
+                      : const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.orange,
+                          ),
+                        ),
                 ),
               ),
 
@@ -112,23 +128,35 @@ class _SaturnLearningPageState extends State<SaturnLearningPage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Column(
                     children: [
-                      _card("🪐 শনি গ্রহ",
-                          "শনি সৌরজগতের দ্বিতীয় বৃহত্তম গ্রহ এবং এটি তার সুন্দর বলয়ের জন্য বিখ্যাত।"),
+                      _card(
+                        "🪐 শনি গ্রহ",
+                        "শনি সৌরজগতের দ্বিতীয় বৃহত্তম গ্রহ এবং এটি তার সুন্দর বলয়ের জন্য বিখ্যাত।",
+                      ),
 
-                      _card("💍 বলয় (Rings)",
-                          "শনির চারপাশে অসংখ্য বরফ ও পাথরের কণা দিয়ে তৈরি বিশাল বলয় রয়েছে।"),
+                      _card(
+                        "💍 বলয় (Rings)",
+                        "শনির চারপাশে অসংখ্য বরফ ও পাথরের কণা দিয়ে তৈরি বিশাল বলয় রয়েছে।",
+                      ),
 
-                      _card("🌫️ গ্যাস জায়ান্ট",
-                          "শনি একটি গ্যাস জায়ান্ট, যা প্রধানত হাইড্রোজেন ও হিলিয়াম দিয়ে তৈরি।"),
+                      _card(
+                        "🌫️ গ্যাস জায়ান্ট",
+                        "শনি একটি গ্যাস জায়ান্ট, যা প্রধানত হাইড্রোজেন ও হিলিয়াম দিয়ে তৈরি।",
+                      ),
 
-                      _card("🌬️ খুব হালকা গ্রহ",
-                          "শনি এত হালকা যে এটি যদি পানিতে রাখা যেত, তাহলে ভেসে থাকত!"),
+                      _card(
+                        "🌬️ খুব হালকা গ্রহ",
+                        "শনি এত হালকা যে এটি যদি পানিতে রাখা যেত, তাহলে ভেসে থাকত!",
+                      ),
 
-                      _card("🌙 অনেক চাঁদ",
-                          "শনির ৮০+ চাঁদ আছে। টাইটান (Titan) এর সবচেয়ে বড় চাঁদ।"),
+                      _card(
+                        "🌙 অনেক চাঁদ",
+                        "শনির ৮০+ চাঁদ আছে। টাইটান (Titan) এর সবচেয়ে বড় চাঁদ।",
+                      ),
 
-                      _card("🧊 ঠান্ডা গ্রহ",
-                          "শনির তাপমাত্রা খুব কম এবং এটি সূর্য থেকে অনেক দূরে অবস্থিত।"),
+                      _card(
+                        "🧊 ঠান্ডা গ্রহ",
+                        "শনির তাপমাত্রা খুব কম এবং এটি সূর্য থেকে অনেক দূরে অবস্থিত।",
+                      ),
                       const SizedBox(height: 20),
                     ],
                   ),
@@ -142,19 +170,26 @@ class _SaturnLearningPageState extends State<SaturnLearningPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (_) => const SaturnQuizPage()),
+                      MaterialPageRoute(builder: (_) => const SaturnQuizPage()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepOrange,
                     minimumSize: const Size(double.infinity, 60),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                   ),
-                  child: const Text("🚀 কুইজ শুরু করো", 
-                      style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+                  child: const Text(
+                    "🚀 কুইজ শুরু করো",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -175,13 +210,22 @@ class _SaturnLearningPageState extends State<SaturnLearningPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orangeAccent)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.orangeAccent,
+            ),
+          ),
           const SizedBox(height: 5),
-          Text(content, style: const TextStyle(color: Color.fromARGB(255, 10, 10, 10), fontSize: 15)),
+          Text(
+            content,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 10, 10, 10),
+              fontSize: 15,
+            ),
+          ),
         ],
       ),
     );
@@ -211,10 +255,30 @@ class _SaturnQuizPageState extends State<SaturnQuizPage> {
 
   List<Question> questions = [
     Question("শনি গ্রহ কী জন্য বিখ্যাত?", ["রং", "বলয়", "তাপ", "পাহাড়"], 1),
-    Question("শনি কোন ধরনের গ্রহ?", ["পাথুরে", "গ্যাস জায়ান্ট", "বরফ গ্রহ", "ছোট গ্রহ"], 1),
-    Question("শনির বলয় কী দিয়ে তৈরি?", ["আগুন", "বরফ ও পাথর", "গ্যাস", "মাটি"], 1),
-    Question("শনির সবচেয়ে বড় চাঁদ কোনটি?", ["চাঁদ", "টাইটান", "ইউরোপা", "আইও"], 1),
-    Question("শনি গ্রহের তাপমাত্রা কেমন?", ["খুব গরম", "মাঝারি", "খুব ঠান্ডা", "পরিবর্তনশীল"], 2),
+    Question("শনি কোন ধরনের গ্রহ?", [
+      "পাথুরে",
+      "গ্যাস জায়ান্ট",
+      "বরফ গ্রহ",
+      "ছোট গ্রহ",
+    ], 1),
+    Question("শনির বলয় কী দিয়ে তৈরি?", [
+      "আগুন",
+      "বরফ ও পাথর",
+      "গ্যাস",
+      "মাটি",
+    ], 1),
+    Question("শনির সবচেয়ে বড় চাঁদ কোনটি?", [
+      "চাঁদ",
+      "টাইটান",
+      "ইউরোপা",
+      "আইও",
+    ], 1),
+    Question("শনি গ্রহের তাপমাত্রা কেমন?", [
+      "খুব গরম",
+      "মাঝারি",
+      "খুব ঠান্ডা",
+      "পরিবর্তনশীল",
+    ], 2),
   ];
 
   void answer(int i) {
@@ -250,8 +314,15 @@ class _SaturnQuizPageState extends State<SaturnQuizPage> {
               color: Colors.orangeAccent,
             ),
             const SizedBox(height: 30),
-            Text(q.question, textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
+            Text(
+              q.question,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 40),
             Expanded(
               child: ListView.builder(
@@ -264,14 +335,22 @@ class _SaturnQuizPageState extends State<SaturnQuizPage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white12,
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                      child: Text(q.options[i], style: const TextStyle(fontSize: 18, color: Colors.white)),
+                      child: Text(
+                        q.options[i],
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -292,13 +371,22 @@ class ResultPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: const Color(0xFF1A0F00),
-      appBar: AppBar(title: const Text("ফলাফল"), backgroundColor: Colors.deepOrange),
+      appBar: AppBar(
+        title: const Text("ফলাফল"),
+        backgroundColor: Colors.deepOrange,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("আপনার স্কোর: $score / $total",
-                style: const TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold)),
+            Text(
+              "আপনার স্কোর: $score / $total",
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 30),
             SizedBox(
               height: 250,
@@ -312,14 +400,20 @@ class ResultPage extends StatelessWidget {
                       color: Colors.green,
                       title: 'সঠিক',
                       radius: 60,
-                      titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      titleStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     PieChartSectionData(
                       value: wrong.toDouble(),
                       color: Colors.red,
                       title: 'ভুল',
                       radius: 60,
-                      titleStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      titleStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -327,14 +421,32 @@ class ResultPage extends StatelessWidget {
             ),
             const SizedBox(height: 50),
             ElevatedButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () async {
+                await LeaderboardService.instance.saveSeniorQuizAttempt(
+                  moduleId: 'saturn',
+                  score: score,
+                  total: total,
+                );
+                if (!context.mounted) {
+                  return;
+                }
+                Navigator.pop(context);
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.deepOrange,
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 15,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
               ),
-              child: const Text("ফিরে যান", style: TextStyle(fontSize: 18, color: Colors.white)),
-            )
+              child: const Text(
+                "ফিরে যান",
+                style: TextStyle(fontSize: 18, color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
